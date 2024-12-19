@@ -114,3 +114,9 @@ button {
     justify-content: center;
     align-items: center;
 }
+#dropdown-products {
+    display: none;
+}
+#menu-products:hover #dropdown-products {
+    display: block;
+}
