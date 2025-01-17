@@ -4,4 +4,4 @@ Bestanden zijn puur voor educatieve doeleinden. Voor vragen, contacteer ondersta
 API code met dank aan: https://github.com/RoyMengelers-zuyd/3-tier-architecture-api-demo
 
 Website: wiv.one
-Contact: 2200685veen@zuyd.nl (Beau van der Veen)
+Contact: 2405158peeters@zuyd.nl(Danny Peeters)
