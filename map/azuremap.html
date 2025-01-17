@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Maps</title>
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" />
+    <link rel="stylesheet" href="Map.css" />
+</head>
+<body style="margin:0;padding:0;">
+    <div id="myMap" style="width:100%;height:100vh;"></div>
+    <script>
+        var map;
+        var dataSource;
+
+        function initializeMap() {
+            map = new atlas.Map('myMap', {
+                center: [5.55, 52.15], // Coordinates (Netherlands)
+                zoom: 7, // Initial zoom level
+                authOptions: {
+                    authType: 'subscriptionKey',
+                    subscriptionKey: '{azureMapsKey}' // Your Azure Maps key
+                }
+            });
+
+            map.events.add('ready', function () {
+                console.log("Map is ready");
+                dataSource = new atlas.source.DataSource();
+                map.sources.add(dataSource);
+                map.layers.add(new atlas.layer.SymbolLayer(dataSource));
+
+                // Create a default marker
+                addMarker(52.15, 5.55);
+            });
+        }
+
+        function addMarker(latitude, longitude) {
+            try {
+                console.log(`Adding marker at latitude: ${latitude}, longitude: ${longitude}`);
+                dataSource.clear(); // Clear existing markers
+                dataSource.add(new atlas.data.Feature(new atlas.data.Point([longitude, latitude]), {
+                    "type": "Point",
+                    "coordinates": [longitude, latitude]
+                })); // Add a new marker
+            } catch (error) {
+                console.error("Error adding marker:", error);
+            }
+        }
+
+        // Initialize the map once the page is loaded
+        document.addEventListener('DOMContentLoaded', initializeMap);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

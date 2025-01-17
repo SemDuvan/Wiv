@@ -1,0 +1,39 @@
+﻿<Window x:Class="map.Index"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:map"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        mc:Ignorable="d"
+        Title="Maps" Height="450" Width="800">
+    <Grid Background="LightSlateGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Logo at the top center -->
+        <Image Source="logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Row="0"/>
+
+        <!-- Buttons in a 2x2 grid on the lower 2/3rds -->
+        <Grid Grid.Row="1" Margin="20" Background="LimeGreen" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Waarneming maken" Grid.Row="0" Grid.Column="0" Margin="10" Width="200" Height="75" Click="Waarneming_Click"/>
+            <Button Content="Navigatie" Grid.Row="0" Grid.Column="1" Margin="10" Width="200" Height="75" Click="Navigatie_Click"/>
+            <Button Content="Profiel" Grid.Row="1" Grid.Column="0" Margin="10" Width="200" Height="75" Click="Profile_Click"/>
+            <Button Content="Leaderboard" Grid.Row="1" Grid.Column="1" Margin="10" Width="200" Height="75"/>
+        </Grid>
+    </Grid>
+</Window>
