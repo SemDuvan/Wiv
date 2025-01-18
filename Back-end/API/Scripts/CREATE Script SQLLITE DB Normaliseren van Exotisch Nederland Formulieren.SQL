@@ -1,0 +1,88 @@
+CREATE TABLE SOORT (
+    Sid INTEGER PRIMARY KEY,
+    Soort TEXT,
+    Voorkomen TEXT
+);
+
+CREATE TABLE WETENSCHAPPELIJKENAAM (
+    WNid INTEGER PRIMARY KEY,
+    Naam TEXT,
+    WetenschappelijkeNaam TEXT
+);
+
+CREATE TABLE LOCATIE (
+    Lid INTEGER PRIMARY KEY,
+    Locatienaam TEXT,
+    provincie TEXT,
+    breedtegraad REAL,
+    lengtegraad REAL
+);
+
+CREATE TABLE GEBRUIKER (
+    Weergavenaam TEXT,
+    naam TEXT,
+    email TEXT PRIMARY KEY,
+    biografie TEXT,
+    taal TEXT,
+    geslacht TEXT,
+    geboortejaar INTEGER,
+    telefoonnummer TEXT,
+    land TEXT
+);
+
+CREATE TABLE WAARNEMING (
+    Wid INTEGER PRIMARY KEY,
+    Omschrijving TEXT,
+    Sid INTEGER,
+    Datum TEXT,
+    Tijd TEXT,
+    WNid INTEGER,
+    Lid INTEGER,
+    toelichting TEXT,
+    aantal INTEGER,
+    geslacht TEXT,
+    gebruiker TEXT,
+    zekerheid TEXT,
+    Webid INTEGER,
+    ManierDelen TEXT,
+    FOREIGN KEY (Sid) REFERENCES SOORT(Sid),
+    FOREIGN KEY (WNid) REFERENCES WETENSCHAPPELIJKENAAM(WNid),
+    FOREIGN KEY (Lid) REFERENCES LOCATIE(Lid),
+    FOREIGN KEY (gebruiker) REFERENCES GEBRUIKER(email)
+);
+
+CREATE TABLE FOTO (
+    Fid INTEGER PRIMARY KEY,
+    Foto BLOB
+);
+
+CREATE TABLE FOTOWAARNEMING (
+    Wid INTEGER,
+    Fid INTEGER,
+    FOREIGN KEY (Wid) REFERENCES WAARNEMING(Wid),
+    FOREIGN KEY (Fid) REFERENCES FOTO(Fid)
+);
+
+CREATE TABLE GELUID (
+    Gid INTEGER PRIMARY KEY,
+    Geluid BLOB
+);
+
+CREATE TABLE GELUIDWAARNEMING (
+    Wid INTEGER,
+    Gid INTEGER,
+    FOREIGN KEY (Wid) REFERENCES WAARNEMING(Wid),
+    FOREIGN KEY (Gid) REFERENCES GELUID(Gid)
+);
+
+CREATE TABLE WEBLINK (
+    Webid INTEGER PRIMARY KEY,
+    Weblink TEXT
+);
+
+CREATE TABLE WEBLINKWAARNEMING (
+    Wid INTEGER,
+    Webid INTEGER,
+    FOREIGN KEY (Wid) REFERENCES WAARNEMING(Wid),
+    FOREIGN KEY (Webid) REFERENCES WEBLINK(Webid)
+);
