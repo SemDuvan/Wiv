@@ -7,7 +7,7 @@
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
         Title="Maps" Height="450" Width="800">
-    <Grid Background="LightSlateGray">
+    <Grid Background="#38a3a5">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
@@ -20,7 +20,7 @@
         <Image Source="logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Row="0"/>
 
         <!-- Buttons in a 2x2 grid on the lower 2/3rds -->
-        <Grid Grid.Row="1" Margin="20" Background="LimeGreen" >
+        <Grid Grid.Row="1" Margin="20" Background="#57cc99" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>

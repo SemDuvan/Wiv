@@ -9,7 +9,6 @@
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Padding" Value="10,5"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="CornerRadius" Value="15"/>
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect BlurRadius="10" ShadowDepth="2" Color="#888" Opacity="0.4"/>
