@@ -5,8 +5,81 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:map"
         mc:Ignorable="d"
-        Title="WaarnemingWindow" Height="450" Width="800">
+        Title="Waarneming" Height="450" Width="800"
+        Background="#22577a">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#53c009"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" To="1.1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" To="1.1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Image upload and placeholder on the left -->
+        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="20">
+            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Height="200" Margin="0,0,0,10">
+                <Image x:Name="uploadedImage" Stretch="Uniform" />
+            </Border>
+            <Button Content="Upload Image" Click="UploadImage_Click" Padding="20,10"/>
+        </StackPanel>
+
+        <!-- Form on the right -->
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+            <TextBlock Text="Naam" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
+            <TextBox x:Name="nameTextBox" Height="30" Margin="0,0,0,10"/>
+            <TextBlock Text="Categorie" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Button Content="Flora" Width="100" Height="40" Margin="0,0,10,0" Click="Flora_Click"/>
+                <Button Content="Fauna" Width="100" Height="40" Click="Fauna_Click"/>
+            </StackPanel>
+            <TextBlock Text="Beschrijving" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
+            <TextBox x:Name="descriptionTextBox" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,10"/>
+            <Button Content="Verzend" Width="100" Height="40" Click="Verzend_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
+

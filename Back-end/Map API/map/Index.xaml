@@ -6,8 +6,52 @@
         xmlns:local="clr-namespace:map"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
-        Title="Maps" Height="450" Width="800">
-    <Grid Background="#38a3a5">
+        Title="Maps" Height="450" Width="800"
+        Background="#22577a">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#53c009"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" To="1.1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" To="1.1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#22577a">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
@@ -16,11 +60,13 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Logo at the top center -->
-        <Image Source="logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Row="0"/>
+        <!-- Placeholder for the logo at the top center -->
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" Background="Gray" Grid.Row="0">
+            <TextBlock Text="Logo" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black"/>
+        </Grid>
 
         <!-- Buttons in a 2x2 grid on the lower 2/3rds -->
-        <Grid Grid.Row="1" Margin="20" Background="#57cc99" >
+        <Grid Grid.Row="1" Margin="20" Background="#22577a">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -30,10 +76,26 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Waarneming maken" Grid.Row="0" Grid.Column="0" Margin="10" Width="200" Height="75" Click="Waarneming_Click"/>
-            <Button Content="Navigatie" Grid.Row="0" Grid.Column="1" Margin="10" Width="200" Height="75" Click="Navigatie_Click"/>
-            <Button Content="Profiel" Grid.Row="1" Grid.Column="0" Margin="10" Width="200" Height="75" Click="Profile_Click"/>
-            <Button Content="Leaderboard" Grid.Row="1" Grid.Column="1" Margin="10" Width="200" Height="75"/>
+            <Button Content="Waarneming maken" Grid.Row="0" Grid.Column="0" Width="200" Height="75" Click="Waarneming_Click" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Button.RenderTransform>
+            </Button>
+            <Button Content="Navigatie" Grid.Row="0" Grid.Column="1" Width="200" Height="75" Click="Navigatie_Click" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Button.RenderTransform>
+            </Button>
+            <Button Content="Profiel" Grid.Row="1" Grid.Column="0" Width="200" Height="75" Click="Profile_Click" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Button.RenderTransform>
+            </Button>
+            <Button Content="Leaderboard" Grid.Row="1" Grid.Column="1" Width="200" Height="75" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Button.RenderTransform>
+            </Button>
         </Grid>
     </Grid>
 </Window>
