@@ -1,38 +1,40 @@
-using Microsoft.AspNetCore.Mvc;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Voeg services toe aan de container.
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(); // Voeg Swagger/OpenAPI toe
+
+// Voeg jouw service toe aan de DI-container
+builder.Services.AddScoped<InheemseSoortService>();
+
+// Voeg CORS-beleid toe
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configureer de HTTP-request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(); // Activeer Swagger
+    app.UseSwaggerUI(); // Activeer Swagger UI
 }
+
+// Gebruik CORS-beleid
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
-app.MapGet("/inheemseSoorten", () =>
-{
-    InheemseSoortService inheemseSoortService = new InheemseSoortService();    
-    return inheemseSoortService.HaalAlleInheemseSoortenOp();
-})
-.WithName("GetInheemseSoorten");
+app.UseAuthorization();
 
-app.MapPost("/add", ([FromBody]InheemseSoort inheemseSoort) =>
-{
-    InheemseSoortService inheemseSoortService = new InheemseSoortService();
-    inheemseSoortService.RegistreerInheemseSoort(inheemseSoort.Naam, inheemseSoort.LocatieNaam, inheemseSoort.Longitude, inheemseSoort.Latitude, inheemseSoort.Datum);
-})
-.WithName("Add");
+app.MapControllers(); // Zorg ervoor dat controllers worden gemapped
 
 app.Run();
-
