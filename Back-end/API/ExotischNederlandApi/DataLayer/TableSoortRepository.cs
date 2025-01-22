@@ -21,13 +21,13 @@ internal class TableSoortRepository
         return connection;
     }
 
-    public List<TableSoort> HaalAlleSoortenOp()
+    public List<TableSoort> HaalAlleTableSoortenOp()
     {
         var connection = CreateOpenConnection();
 
         var soorten = new List<TableSoort>();
         string selectQuery = @"
-            SELECT * FROM Soort;";
+            SELECT * FROM SOORT;";
         using var command = new SqliteCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
@@ -35,7 +35,6 @@ internal class TableSoortRepository
         {
             string soort = reader.GetString(0);
             string voorkomen = reader.GetString(1);
-
             soorten.Add(new TableSoort
             (
                 soort,
@@ -45,27 +44,27 @@ internal class TableSoortRepository
 
         return soorten;
     }
-    public void VoegSoortToe(TableSoort soort)
+    public void VoegTableSoortToe(TableSoort tableSoort)
     {
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO Soort (Soort, Voorkomen)
+            INSERT INTO SOORT (Soort, Voorkomen)
             VALUES (@Soort, @Voorkomen);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Naam", soort.Soort);
-        command.Parameters.AddWithValue("@LocatieNaam", soort.Voorkomen);
+        command.Parameters.AddWithValue("@Naam", tableSoort.Soort);
+        command.Parameters.AddWithValue("@LocatieNaam", tableSoort.Voorkomen);
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderSoort(String soort)
+    public void VerwijderTableSoort(String soort)
     {
         using var connection = CreateOpenConnection();
 
         string deleteQuery = @"
-        DELETE FROM Soort
+        DELETE FROM SOORT
         WHERE Soort = @Soort;";
 
         using var command = new SqliteCommand(deleteQuery, connection);

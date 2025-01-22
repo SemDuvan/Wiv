@@ -16,36 +16,36 @@ namespace MinimalApiExample.Controllers
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleSoortenOp()
+        public IActionResult HaalAlleTableSoortenOp()
         {
-            var soorten = _service.HaalAlleSoortenOp();
-            return Ok(soorten);
+            var tableSoorten = _service.HaalAlleTableSoortenOp();
+            return Ok(tableSoorten);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegSoortToe([FromBody] TableSoort Soort)
+        public IActionResult VoegTableSoortToe([FromBody] TableSoort tableSoort)
         {
-            if (Soort == null)
+            if (tableSoort == null)
             {
                 return BadRequest("Soort mag niet null zijn.");
             }
 
-            _service.RegistreerInheemseSoort(Soort);
+            _service.RegistreerTableSoort(tableSoort);
             return Ok("Soort toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderSoort(String naam)
+        public IActionResult VerwijderTableSoort(String soort)
         {
-            var isVerwijderd = _service.VerwijderSoort(naam);
+            var isVerwijderd = _service.VerwijderTableSoort(soort);
             if (!isVerwijderd)
             {
-                return NotFound($"Soort met naam {naam} niet gevonden.");
+                return NotFound($"Soort met naam {soort} niet gevonden.");
             }
 
-            return Ok($"Soort met naam {naam} is verwijderd.");
+            return Ok($"Soort met naam {soort} is verwijderd.");
         }
     }
 }

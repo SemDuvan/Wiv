@@ -6,17 +6,17 @@ public class TableSoortService
     {
         _repository = new TableSoortRepository();
     }
-    public List<TableSoort> HaalAlleSoortenOp()
+    public List<TableSoort> HaalAlleTableSoortenOp()
     {
-        return _repository.HaalAlleSoortenOp();
+        return _repository.HaalAlleTableSoortenOp();
     }
 
-    public void RegistreerSoort(TableSoort soort)
+    public void RegistreerTableSoort(TableSoort tableSoort)
     {
-        _repository.VoegInheemseSoortToe(soort);
+        _repository.VoegTableSoortToe(tableSoort);
     }
 
-    public bool VerwijderInheemseSoort(String soort)
+    public bool VerwijderTableSoort(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class TableSoortService
         //    return false;
         //}
 
-        _repository.VerwijderSoort(soort);
+        _repository.VerwijderTableSoort(soort);
         return true;
     }
 }
