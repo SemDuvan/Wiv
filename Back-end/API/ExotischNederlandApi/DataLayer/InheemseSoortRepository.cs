@@ -2,7 +2,7 @@ using Microsoft.Data.Sqlite;
 
 internal class InheemseSoortRepository
 {
-    private readonly string _connectionString = @"Data Source=C:\Users\amkreutzbfh\OneDrive - Zuyd Hogeschool\Modules\Create\Opdrachten\GitHubApi3Tires\Scripts\ExotischNederland.db";
+    private readonly string _connectionString = @"Data Source=C:\Programmeren\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
     public InheemseSoortRepository()
     {
