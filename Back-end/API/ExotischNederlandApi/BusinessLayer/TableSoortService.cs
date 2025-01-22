@@ -1,6 +1,6 @@
 public class TableSoortService
 {
-    private readonly InheemseSoortRepository _repository;
+    private readonly TableSoortRepository _repository;
 
     public TableSoortService()
     {
