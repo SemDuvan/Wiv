@@ -1,22 +1,22 @@
 public class FotoService
 {
-    private readonly TableFotoRepository _repository;
+    private readonly FotoRepository _repository;
 
     public FotoService()
     {
-        _repository = new TableFotoRepository();
+        _repository = new FotoRepository();
     }
-    public List<TableFoto> HaalAlleTableFotosOp()
+    public List<Foto> HaalAlleFotosOp()
     {
-        return _repository.HaalAlleTableFotosOp();
+        return _repository.HaalAlleFotosOp();
     }
 
-    public void RegistreerTableFoto(TableFoto tableFoto)
+    public void RegistreerFoto(Foto Foto)
     {
-        _repository.VoegTableFotoToe(tableFoto);
+        _repository.VoegFotoToe(Foto);
     }
 
-    public bool VerwijderTableFoto(String soort)
+    public bool VerwijderFoto(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class FotoService
         //    return false;
         //}
 
-        _repository.VerwijderTableFoto(soort);
+        _repository.VerwijderFoto(soort);
         return true;
     }
 }

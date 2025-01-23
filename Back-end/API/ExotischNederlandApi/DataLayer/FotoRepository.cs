@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-internal class TableFotoRepository
+internal class FotoRepository
 {
     private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
-    public TableFotoRepository()
+    public FotoRepository()
     {
         InitializeDatabase();
     }
@@ -21,11 +21,11 @@ internal class TableFotoRepository
         return connection;
     }
 
-    public List<TableFoto> HaalAlleTableFotosOp()
+    public List<Foto> HaalAlleFotosOp()
     {
         var connection = CreateOpenConnection();
 
-        var soorten = new List<TableFoto>();
+        var soorten = new List<Foto>();
         string selectQuery = @"
             SELECT * FROM FOTO;";
         using var command = new SqliteCommand(selectQuery, connection);
@@ -34,7 +34,7 @@ internal class TableFotoRepository
         while (reader.Read())
         {
             int fid = reader.GetInt32(0);
-            soorten.Add(new TableFoto
+            soorten.Add(new Foto
             (
                 fid
             ));
@@ -42,7 +42,7 @@ internal class TableFotoRepository
 
         return soorten;
     }
-    public void VoegTableFotoToe(TableFoto tableFoto)
+    public void VoegFotoToe(Foto Foto)
     {
         var connection = CreateOpenConnection();
 
@@ -51,12 +51,12 @@ internal class TableFotoRepository
             VALUES (@Fid);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Fid", tableFoto.Fid);
+        command.Parameters.AddWithValue("@Fid", Foto.Fid);
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderTableFoto(String fid)
+    public void VerwijderFoto(String fid)
     {
         using var connection = CreateOpenConnection();
 

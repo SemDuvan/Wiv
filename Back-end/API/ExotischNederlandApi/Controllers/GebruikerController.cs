@@ -5,41 +5,41 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableGebruikersController : ControllerBase
+    public class GebruikersController : ControllerBase
     {
         private readonly GebruikerService _service;
 
-        public TableGebruikersController(GebruikerService service)
+        public GebruikersController(GebruikerService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableGebruikersOp()
+        public IActionResult HaalAlleGebruikersOp()
         {
-            var tableGebruikers = _service.HaalAlleTableGebruikersOp();
-            return Ok(tableGebruikers);
+            var Gebruikers = _service.HaalAlleGebruikersOp();
+            return Ok(Gebruikers);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableGebruikerToe([FromBody] TableGebruiker tableGebruiker)
+        public IActionResult VoegGebruikerToe([FromBody] Gebruiker Gebruiker)
         {
-            if (tableGebruiker == null)
+            if (Gebruiker == null)
             {
                 return BadRequest("Gebruiker mag niet null zijn.");
             }
 
-            _service.RegistreerTableGebruiker(tableGebruiker);
+            _service.RegistreerGebruiker(Gebruiker);
             return Ok("Gebruiker toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableGebruiker(String naam)
+        public IActionResult VerwijderGebruiker(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableGebruiker(naam);
+            var isVerwijderd = _service.VerwijderGebruiker(naam);
             if (!isVerwijderd)
             {
                 return NotFound($"Gebruiker met naam {naam} niet gevonden.");

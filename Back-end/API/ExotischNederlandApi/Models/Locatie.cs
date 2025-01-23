@@ -1,4 +1,4 @@
-public class TableLocatie
+public class Locatie
 {
     public int Lid { get; private set; }
     public string Locatienaam { get; private set; }
@@ -7,7 +7,7 @@ public class TableLocatie
     public float Lengtegraad { get; private set; }
 
 
-    public TableLocatie(int lid, string locatienaam, string provincie, float breedtegraad, float lengtegraad)
+    public Locatie(int lid, string locatienaam, string provincie, float breedtegraad, float lengtegraad)
     {
         Lid = lid;
         Locatienaam = locatienaam;

@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-internal class TableLocatieRepository
+internal class LocatieRepository
 {
     private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
-    public TableLocatieRepository()
+    public LocatieRepository()
     {
         InitializeDatabase();
     }
@@ -21,11 +21,11 @@ internal class TableLocatieRepository
         return connection;
     }
 
-    public List<TableLocatie> HaalAlleTableLocatiesOp()
+    public List<Locatie> HaalAlleLocatiesOp()
     {
         var connection = CreateOpenConnection();
 
-        var soorten = new List<TableLocatie>();
+        var soorten = new List<Locatie>();
         string selectQuery = @"
             SELECT * FROM LOCATIE;";
         using var command = new SqliteCommand(selectQuery, connection);
@@ -38,7 +38,7 @@ internal class TableLocatieRepository
             string provincie = reader.GetString(2);
             float breedtegraad = reader.GetFloat(3);
             float lengtegraad = reader.GetFloat(4);
-            soorten.Add(new TableLocatie
+            soorten.Add(new Locatie
             (
                 lid,
                 locatienaam,
@@ -50,7 +50,7 @@ internal class TableLocatieRepository
 
         return soorten;
     }
-    public void VoegTableLocatieToe(TableLocatie tableLocatie)
+    public void VoegLocatieToe(Locatie Locatie)
     {
         var connection = CreateOpenConnection();
 
@@ -59,16 +59,16 @@ internal class TableLocatieRepository
             VALUES (@Lid, @Locatienaam, @Provincie, @Breedtegraad, @Lengtegraad);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Lid", tableLocatie.Lid);
-        command.Parameters.AddWithValue("@Locatienaam", tableLocatie.Locatienaam);
-        command.Parameters.AddWithValue("@Provincie", tableLocatie.Provincie);
-        command.Parameters.AddWithValue("@Breedtegraat", tableLocatie.Breedtegraad);
-        command.Parameters.AddWithValue("@Lengtegraad", tableLocatie.Lengtegraad);
+        command.Parameters.AddWithValue("@Lid", Locatie.Lid);
+        command.Parameters.AddWithValue("@Locatienaam", Locatie.Locatienaam);
+        command.Parameters.AddWithValue("@Provincie", Locatie.Provincie);
+        command.Parameters.AddWithValue("@Breedtegraat", Locatie.Breedtegraad);
+        command.Parameters.AddWithValue("@Lengtegraad", Locatie.Lengtegraad);
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderTableLocatie(String lid)
+    public void VerwijderLocatie(String lid)
     {
         using var connection = CreateOpenConnection();
 

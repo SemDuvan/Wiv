@@ -1,22 +1,22 @@
 public class GebruikerService
 {
-    private readonly TableGebruikerRepository _repository;
+    private readonly GebruikerRepository _repository;
 
     public GebruikerService()
     {
-        _repository = new TableGebruikerRepository();
+        _repository = new GebruikerRepository();
     }
-    public List<TableGebruiker> HaalAlleTableGebruikersOp()
+    public List<Gebruiker> HaalAlleGebruikersOp()
     {
-        return _repository.HaalAlleTableGebruikersOp();
+        return _repository.HaalAlleGebruikersOp();
     }
 
-    public void RegistreerTableGebruiker(TableGebruiker tableGebruiker)
+    public void RegistreerGebruiker(Gebruiker Gebruiker)
     {
-        _repository.VoegTableGebruikerToe(tableGebruiker);
+        _repository.VoegGebruikerToe(Gebruiker);
     }
 
-    public bool VerwijderTableGebruiker(String soort)
+    public bool VerwijderGebruiker(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class GebruikerService
         //    return false;
         //}
 
-        _repository.VerwijderTableGebruiker(soort);
+        _repository.VerwijderGebruiker(soort);
         return true;
     }
 }

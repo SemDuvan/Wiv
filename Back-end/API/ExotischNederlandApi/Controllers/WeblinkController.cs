@@ -5,41 +5,41 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableWeblinksController : ControllerBase
+    public class WeblinksController : ControllerBase
     {
         private readonly WeblinkService _service;
 
-        public TableWeblinksController(WeblinkService service)
+        public WeblinksController(WeblinkService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableWeblinksOp()
+        public IActionResult HaalAlleWeblinksOp()
         {
-            var tableWeblinks = _service.HaalAlleTableWeblinksOp();
-            return Ok(tableWeblinks);
+            var Weblinks = _service.HaalAlleWeblinksOp();
+            return Ok(Weblinks);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableWeblinkToe([FromBody] TableWeblink tableWeblink)
+        public IActionResult VoegWeblinkToe([FromBody] Weblinks Weblink)
         {
-            if (tableWeblink == null)
+            if (Weblink == null)
             {
                 return BadRequest("Weblink mag niet null zijn.");
             }
 
-            _service.RegistreerTableWeblink(tableWeblink);
+            _service.RegistreerWeblink(Weblink);
             return Ok("Weblink toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableWeblink(String naam)
+        public IActionResult VerwijderWeblink(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableWeblink(naam);
+            var isVerwijderd = _service.VerwijderWeblink(naam);
             if (!isVerwijderd)
             {
                 return NotFound($"Weblink met naam {naam} niet gevonden.");

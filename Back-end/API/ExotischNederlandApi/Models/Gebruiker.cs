@@ -1,4 +1,4 @@
-public class TableGebruiker
+public class Gebruiker
 {
     public string Weergavenaam { get; private set; }
     public string Naam { get; private set; }
@@ -11,7 +11,7 @@ public class TableGebruiker
     public string Land { get; private set; }
 
 
-    public TableGebruiker(string weergavenaam, string naam, string email, string biografie, string taal, string geslacht, int geboortejaar, string telefoonnummer, string land)
+    public Gebruiker(string weergavenaam, string naam, string email, string biografie, string taal, string geslacht, int geboortejaar, string telefoonnummer, string land)
     {
         Weergavenaam = weergavenaam;
         Naam = naam;

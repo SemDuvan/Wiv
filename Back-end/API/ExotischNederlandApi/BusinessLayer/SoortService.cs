@@ -1,22 +1,22 @@
 public class SoortService
 {
-    private readonly TableSoortRepository _repository;
+    private readonly SoortRepository _repository;
 
     public SoortService()
     {
-        _repository = new TableSoortRepository();
+        _repository = new SoortRepository();
     }
-    public List<TableSoort> HaalAlleTableSoortenOp()
+    public List<Soorten> HaalAlleSoortenOp()
     {
-        return _repository.HaalAlleTableSoortenOp();
+        return _repository.HaalAlleSoortenOp();
     }
 
-    public void RegistreerTableSoort(TableSoort tableSoort)
+    public void RegistreerSoort(Soorten Soort)
     {
-        _repository.VoegTableSoortToe(tableSoort);
+        _repository.VoegSoortToe(Soort);
     }
 
-    public bool VerwijderTableSoort(String soort)
+    public bool VerwijderSoort(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class SoortService
         //    return false;
         //}
 
-        _repository.VerwijderTableSoort(soort);
+        _repository.VerwijderSoort(soort);
         return true;
     }
 }

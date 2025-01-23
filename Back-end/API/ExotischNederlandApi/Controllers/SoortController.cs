@@ -5,41 +5,41 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableSoortenController : ControllerBase
+    public class SoortenController : ControllerBase
     {
         private readonly SoortService _service;
 
-        public TableSoortenController(SoortService service)
+        public SoortenController(SoortService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableSoortenOp()
+        public IActionResult HaalAlleSoortenOp()
         {
-            var tableSoorten = _service.HaalAlleTableSoortenOp();
-            return Ok(tableSoorten);
+            var Soorten = _service.HaalAlleSoortenOp();
+            return Ok(Soorten);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableSoortToe([FromBody] TableSoort tableSoort)
+        public IActionResult VoegSoortToe([FromBody] Soorten Soort)
         {
-            if (tableSoort == null)
+            if (Soort == null)
             {
                 return BadRequest("Soort mag niet null zijn.");
             }
 
-            _service.RegistreerTableSoort(tableSoort);
+            _service.RegistreerSoort(Soort);
             return Ok("Soort toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableSoort(String naam)
+        public IActionResult VerwijderSoort(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableSoort(naam);
+            var isVerwijderd = _service.VerwijderSoort(naam);
             if (!isVerwijderd)
             {
                 return NotFound($"Soort met naam {naam} niet gevonden.");

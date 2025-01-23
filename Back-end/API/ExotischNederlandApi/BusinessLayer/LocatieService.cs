@@ -1,22 +1,22 @@
 public class LocatieService
 {
-    private readonly TableLocatieRepository _repository;
+    private readonly LocatieRepository _repository;
 
     public LocatieService()
     {
-        _repository = new TableLocatieRepository();
+        _repository = new LocatieRepository();
     }
-    public List<TableLocatie> HaalAlleTableLocatiesOp()
+    public List<Locatie> HaalAlleLocatiesOp()
     {
-        return _repository.HaalAlleTableLocatiesOp();
+        return _repository.HaalAlleLocatiesOp();
     }
 
-    public void RegistreerTableLocatie(TableLocatie tableLocatie)
+    public void RegistreerLocatie(Locatie Locatie)
     {
-        _repository.VoegTableLocatieToe(tableLocatie);
+        _repository.VoegLocatieToe(Locatie);
     }
 
-    public bool VerwijderTableLocatie(String soort)
+    public bool VerwijderLocatie(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class LocatieService
         //    return false;
         //}
 
-        _repository.VerwijderTableLocatie(soort);
+        _repository.VerwijderLocatie(soort);
         return true;
     }
 }

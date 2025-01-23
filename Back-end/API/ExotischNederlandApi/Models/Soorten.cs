@@ -1,10 +1,10 @@
-public class TableSoort
+public class Soorten
 {
     public int Sid { get; private set; }
     public string Soort { get; private set; }
     public string Voorkomen { get; private set; }
 
-    public TableSoort(int sid, string soort, string voorkomen)
+    public Soorten(int sid, string soort, string voorkomen)
     {
         Sid = sid;
         Soort = soort;

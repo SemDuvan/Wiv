@@ -16,30 +16,30 @@ namespace MinimalApiExample.Controllers
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableFotosOp()
+        public IActionResult HaalAlleFotosOp()
         {
-            var tableFotos = _service.HaalAlleTableFotosOp();
-            return Ok(tableFotos);
+            var Fotos = _service.HaalAlleFotosOp();
+            return Ok(Fotos);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableFotoToe([FromBody] TableFoto tableFoto)
+        public IActionResult VoegFotoToe([FromBody] Foto Foto)
         {
-            if (tableFoto == null)
+            if (Foto == null)
             {
                 return BadRequest("Foto mag niet null zijn.");
             }
 
-            _service.RegistreerTableFoto(tableFoto);
+            _service.RegistreerFoto(Foto);
             return Ok("Foto toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableFoto(String naam)
+        public IActionResult VerwijderFoto(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableFoto(naam);
+            var isVerwijderd = _service.VerwijderFoto(naam);
             if (!isVerwijderd)
             {
                 return NotFound($"Foto met naam {naam} niet gevonden.");

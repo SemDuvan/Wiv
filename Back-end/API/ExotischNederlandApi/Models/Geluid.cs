@@ -1,8 +1,8 @@
-public class TableGeluid
+public class Geluid
 {
     public int Gid { get; private set; }
 
-    public TableGeluid(int gid)
+    public Geluid(int gid)
     {
         Gid = gid;
     }

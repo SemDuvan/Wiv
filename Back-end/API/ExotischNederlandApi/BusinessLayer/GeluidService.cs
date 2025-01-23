@@ -1,22 +1,22 @@
 public class GeluidService
 {
-    private readonly TableGeluidRepository _repository;
+    private readonly GeluidRepository _repository;
 
     public GeluidService()
     {
-        _repository = new TableGeluidRepository();
+        _repository = new GeluidRepository();
     }
-    public List<TableGeluid> HaalAlleTableGeluidsOp()
+    public List<Geluid> HaalAlleGeluidsOp()
     {
-        return _repository.HaalAlleTableGeluidsOp();
+        return _repository.HaalAlleGeluidsOp();
     }
 
-    public void RegistreerTableGeluid(TableGeluid tableGeluid)
+    public void RegistreerGeluid(Geluid Geluid)
     {
-        _repository.VoegTableGeluidToe(tableGeluid);
+        _repository.VoegGeluidToe(Geluid);
     }
 
-    public bool VerwijderTableGeluid(String soort)
+    public bool VerwijderGeluid(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class GeluidService
         //    return false;
         //}
 
-        _repository.VerwijderTableGeluid(soort);
+        _repository.VerwijderGeluid(soort);
         return true;
     }
 }

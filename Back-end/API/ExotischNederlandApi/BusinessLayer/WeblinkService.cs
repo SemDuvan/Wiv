@@ -1,22 +1,22 @@
 public class WeblinkService
 {
-    private readonly TableWeblinkRepository _repository;
+    private readonly WeblinkRepository _repository;
 
     public WeblinkService()
     {
-        _repository = new TableWeblinkRepository();
+        _repository = new WeblinkRepository();
     }
-    public List<TableWeblink> HaalAlleTableWeblinksOp()
+    public List<Weblinks> HaalAlleWeblinksOp()
     {
-        return _repository.HaalAlleTableWeblinksOp();
+        return _repository.HaalAlleWeblinksOp();
     }
 
-    public void RegistreerTableWeblink(TableWeblink tableWeblink)
+    public void RegistreerWeblink(Weblinks Weblink)
     {
-        _repository.VoegTableWeblinkToe(tableWeblink);
+        _repository.VoegWeblinkToe(Weblink);
     }
 
-    public bool VerwijderTableWeblink(String soort)
+    public bool VerwijderWeblink(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class WeblinkService
         //    return false;
         //}
 
-        _repository.VerwijderTableWeblink(soort);
+        _repository.VerwijderWeblink(soort);
         return true;
     }
 }

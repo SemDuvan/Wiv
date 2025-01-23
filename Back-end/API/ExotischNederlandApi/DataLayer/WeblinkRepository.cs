@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-internal class TableWeblinkRepository
+internal class WeblinkRepository
 {
     private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
-    public TableWeblinkRepository()
+    public WeblinkRepository()
     {
         InitializeDatabase();
     }
@@ -21,11 +21,11 @@ internal class TableWeblinkRepository
         return connection;
     }
 
-    public List<TableWeblink> HaalAlleTableWeblinksOp()
+    public List<Weblinks> HaalAlleWeblinksOp()
     {
         var connection = CreateOpenConnection();
 
-        var soorten = new List<TableWeblink>();
+        var soorten = new List<Weblinks>();
         string selectQuery = @"
             SELECT * FROM WEBLINK;";
         using var command = new SqliteCommand(selectQuery, connection);
@@ -35,7 +35,7 @@ internal class TableWeblinkRepository
         {
             int webid = reader.GetInt32(0);
             string weblink = reader.GetString(1);
-            soorten.Add(new TableWeblink
+            soorten.Add(new Weblinks
             (
                 webid,
                 weblink
@@ -44,7 +44,7 @@ internal class TableWeblinkRepository
 
         return soorten;
     }
-    public void VoegTableWeblinkToe(TableWeblink tableWeblink)
+    public void VoegWeblinkToe(Weblinks Weblink)
     {
         var connection = CreateOpenConnection();
 
@@ -53,13 +53,13 @@ internal class TableWeblinkRepository
             VALUES (@Webid, @Weblink);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Webid", tableWeblink.Webid);
-        command.Parameters.AddWithValue("@Weblink", tableWeblink.Weblink);
+        command.Parameters.AddWithValue("@Webid", Weblink.Webid);
+        command.Parameters.AddWithValue("@Weblink", Weblink.Weblink);
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderTableWeblink(String webid)
+    public void VerwijderWeblink(String webid)
     {
         using var connection = CreateOpenConnection();
 

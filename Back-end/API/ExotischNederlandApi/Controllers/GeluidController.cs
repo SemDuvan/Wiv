@@ -5,41 +5,41 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableGeluidsController : ControllerBase
+    public class GeluidsController : ControllerBase
     {
         private readonly GeluidService _service;
 
-        public TableGeluidsController(GeluidService service)
+        public GeluidsController(GeluidService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableGeluidsOp()
+        public IActionResult HaalAlleGeluidsOp()
         {
-            var tableGeluids = _service.HaalAlleTableGeluidsOp();
-            return Ok(tableGeluids);
+            var Geluids = _service.HaalAlleGeluidsOp();
+            return Ok(Geluids);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableGeluidToe([FromBody] TableGeluid tableGeluid)
+        public IActionResult VoegGeluidToe([FromBody] Geluid Geluid)
         {
-            if (tableGeluid == null)
+            if (Geluid == null)
             {
                 return BadRequest("Geluid mag niet null zijn.");
             }
 
-            _service.RegistreerTableGeluid(tableGeluid);
+            _service.RegistreerGeluid(Geluid);
             return Ok("Geluid toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableGeluid(String naam)
+        public IActionResult VerwijderGeluid(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableGeluid(naam);
+            var isVerwijderd = _service.VerwijderGeluid(naam);
             if (!isVerwijderd)
             {
                 return NotFound($"Geluid met naam {naam} niet gevonden.");

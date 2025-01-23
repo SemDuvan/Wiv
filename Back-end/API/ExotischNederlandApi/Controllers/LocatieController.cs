@@ -5,41 +5,41 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableLocatiesController : ControllerBase
+    public class LocatiesController : ControllerBase
     {
         private readonly LocatieService _service;
 
-        public TableLocatiesController(LocatieService service)
+        public LocatiesController(LocatieService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableLocatiesOp()
+        public IActionResult HaalAlleLocatiesOp()
         {
-            var tableLocaties = _service.HaalAlleTableLocatiesOp();
-            return Ok(tableLocaties);
+            var Locaties = _service.HaalAlleLocatiesOp();
+            return Ok(Locaties);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableLocatieToe([FromBody] TableLocatie tableLocatie)
+        public IActionResult VoegLocatieToe([FromBody] Locatie Locatie)
         {
-            if (tableLocatie == null)
+            if (Locatie == null)
             {
                 return BadRequest("Locatie mag niet null zijn.");
             }
 
-            _service.RegistreerTableLocatie(tableLocatie);
+            _service.RegistreerLocatie(Locatie);
             return Ok("Locatie toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableLocatie(String naam)
+        public IActionResult VerwijderLocatie(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableLocatie(naam);
+            var isVerwijderd = _service.VerwijderLocatie(naam);
             if (!isVerwijderd)
             {
                 return NotFound($"Locatie met naam {naam} niet gevonden.");

@@ -1,8 +1,8 @@
-public class TableFoto
+public class Foto
 {
     public int Fid { get; private set; }
 
-    public TableFoto(int fid)
+    public Foto(int fid)
     {
         Fid = fid;
     }
