@@ -5,47 +5,47 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableSoortenController : ControllerBase
+    public class WeblinkWaarnemingenController : ControllerBase
     {
-        private readonly TableSoortService _service;
+        private readonly WeblinkWaarnemingService _service;
 
-        public TableSoortenController(TableSoortService service)
+        public WeblinkWaarnemingenController(WeblinkWaarnemingService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableSoortenOp()
+        public IActionResult HaalAlleWeblinkWaarnemingenOp()
         {
-            var tableSoorten = _service.HaalAlleTableSoortenOp();
-            return Ok(tableSoorten);
+            var weblinkWaarnemingen = _service.HaalAlleWeblinkWaarnemingenOp();
+            return Ok(weblinkWaarnemingen);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableSoortToe([FromBody] TableSoort tableSoort)
+        public IActionResult VoegWeblinkWaarnemingToe([FromBody] WeblinkWaarneming weblinkWaarneming)
         {
-            if (tableSoort == null)
+            if (weblinkWaarneming == null)
             {
-                return BadRequest("Soort mag niet null zijn.");
+                return BadRequest("Weblink waarneming mag niet null zijn.");
             }
 
-            _service.RegistreerTableSoort(tableSoort);
-            return Ok("Soort toegevoegd.");
+            _service.RegistreerWeblinkWaarneming(weblinkWaarneming);
+            return Ok("Weblink waarneming toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableSoort(String soort)
+        public IActionResult VerwijderWeblinkWaarneming(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableSoort(soort);
+            var isVerwijderd = _service.VerwijderWeblinkWaarneming(naam);
             if (!isVerwijderd)
             {
-                return NotFound($"Soort met naam {soort} niet gevonden.");
+                return NotFound($"Weblink waarneming met naam {naam} niet gevonden.");
             }
 
-            return Ok($"Soort met naam {soort} is verwijderd.");
+            return Ok($"Weblink waarneming met naam {naam} is verwijderd.");
         }
     }
 }

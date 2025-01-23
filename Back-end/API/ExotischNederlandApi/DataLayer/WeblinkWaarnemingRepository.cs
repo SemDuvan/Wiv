@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-internal class TableSoortRepository
+internal class WeblinkWaarnemingRepository
 {
     private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
-    public TableSoortRepository()
+    public WeblinkWaarnemingRepository()
     {
         InitializeDatabase();
     }
@@ -21,57 +21,55 @@ internal class TableSoortRepository
         return connection;
     }
 
-    public List<TableSoort> HaalAlleTableSoortenOp()
+    public List<WeblinkWaarneming> HaalAlleWeblinkWaarnemingenOp()
     {
         var connection = CreateOpenConnection();
 
-        var soorten = new List<TableSoort>();
+        var soorten = new List<WeblinkWaarneming>();
         string selectQuery = @"
-            SELECT * FROM SOORT;";
+            SELECT * FROM WEBLINKWAARNEMING;";
         using var command = new SqliteCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            int sid = reader.GetInt32(0);
-            string soort = reader.GetString(1);
-            string voorkomen = reader.GetString(2);
-            soorten.Add(new TableSoort
+            int wid = reader.GetInt32(0);
+            int webid = reader.GetInt32(1);
+            soorten.Add(new WeblinkWaarneming
             (
-                sid,
-                soort,
-                voorkomen
+                wid,
+                webid
             ));
         }
 
         return soorten;
     }
-    public void VoegTableSoortToe(TableSoort tableSoort)
+    public void VoegWeblinkWaarnemingToe(WeblinkWaarneming weblinkWaarneming)
     {
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Sid, Soort, Voorkomen)
-            VALUES (@Sid, @Soort, @Voorkomen);";
+            INSERT INTO SOORT (Wid, Webid)
+            VALUES (@Wid, @Webid);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Sid", tableSoort.Sid);
-        command.Parameters.AddWithValue("@Naam", tableSoort.Soort);
-        command.Parameters.AddWithValue("@LocatieNaam", tableSoort.Voorkomen);
+        command.Parameters.AddWithValue("@Wid", weblinkWaarneming.Wid);
+        command.Parameters.AddWithValue("@Webid", weblinkWaarneming.Webid);
+
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderTableSoort(String soort)
+    public void VerwijderWeblinkWaarneming(String wid)
     {
         using var connection = CreateOpenConnection();
 
         string deleteQuery = @"
-        DELETE FROM SOORT
-        WHERE Soort = @Soort;";
+        DELETE FROM WEBLINKWAARNEMING
+        WHERE Wid = @Wid;";
 
         using var command = new SqliteCommand(deleteQuery, connection);
-        command.Parameters.AddWithValue("@Soort", soort);
+        command.Parameters.AddWithValue("@Wid", wid);
 
         command.ExecuteNonQuery();
     }

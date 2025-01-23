@@ -5,47 +5,47 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableSoortenController : ControllerBase
+    public class WaarnemingenController : ControllerBase
     {
-        private readonly TableSoortService _service;
+        private readonly WaarnemingService _service;
 
-        public TableSoortenController(TableSoortService service)
+        public WaarnemingenController(WaarnemingService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableSoortenOp()
+        public IActionResult HaalAlleWaarnemingenOp()
         {
-            var tableSoorten = _service.HaalAlleTableSoortenOp();
-            return Ok(tableSoorten);
+            var waarnemingen = _service.HaalAlleWaarnemingenOp();
+            return Ok(waarnemingen);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableSoortToe([FromBody] TableSoort tableSoort)
+        public IActionResult VoegWaarnemingToe([FromBody] Waarneming waarneming)
         {
-            if (tableSoort == null)
+            if (waarneming == null)
             {
-                return BadRequest("Soort mag niet null zijn.");
+                return BadRequest("Waarneming mag niet null zijn.");
             }
 
-            _service.RegistreerTableSoort(tableSoort);
-            return Ok("Soort toegevoegd.");
+            _service.RegistreerWaarneming(waarneming);
+            return Ok("Waarneming toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableSoort(String soort)
+        public IActionResult VerwijderWaarneming(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableSoort(soort);
+            var isVerwijderd = _service.VerwijderWaarneming(naam);
             if (!isVerwijderd)
             {
-                return NotFound($"Soort met naam {soort} niet gevonden.");
+                return NotFound($"Waarneming met naam {naam} niet gevonden.");
             }
 
-            return Ok($"Soort met naam {soort} is verwijderd.");
+            return Ok($"Waarneming met naam {naam} is verwijderd.");
         }
     }
 }

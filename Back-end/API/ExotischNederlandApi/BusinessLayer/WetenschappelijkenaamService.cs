@@ -1,22 +1,22 @@
-public class TableSoortService
+public class WetenschappelijkenaamService
 {
-    private readonly TableSoortRepository _repository;
+    private readonly WetenschappelijkenaamRepository _repository;
 
-    public TableSoortService()
+    public WetenschappelijkenaamService()
     {
-        _repository = new TableSoortRepository();
+        _repository = new WetenschappelijkenaamRepository();
     }
-    public List<TableSoort> HaalAlleTableSoortenOp()
+    public List<Wetenschappelijkenaam> HaalAlleWetenschappelijkenamenOp()
     {
-        return _repository.HaalAlleTableSoortenOp();
-    }
-
-    public void RegistreerTableSoort(TableSoort tableSoort)
-    {
-        _repository.VoegTableSoortToe(tableSoort);
+        return _repository.HaalAlleWetenschappelijkenamenOp();
     }
 
-    public bool VerwijderTableSoort(String soort)
+    public void RegistreerWetenschappelijkenaam(Wetenschappelijkenaam wetenschappelijkeNaam)
+    {
+        _repository.VoegWetenschappelijkenaamToe(wetenschappelijkeNaam);
+    }
+
+    public bool VerwijderWetenschappelijkenaam(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class TableSoortService
         //    return false;
         //}
 
-        _repository.VerwijderTableSoort(soort);
+        _repository.VerwijderWetenschappelijkenaam(soort);
         return true;
     }
 }

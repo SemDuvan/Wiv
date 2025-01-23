@@ -1,22 +1,22 @@
-public class TableSoortService
+public class FotoWaarnemingService
 {
-    private readonly TableSoortRepository _repository;
+    private readonly FotoWaarnemingRepository _repository;
 
-    public TableSoortService()
+    public FotoWaarnemingService()
     {
-        _repository = new TableSoortRepository();
+        _repository = new FotoWaarnemingRepository();
     }
-    public List<TableSoort> HaalAlleTableSoortenOp()
+    public List<FotoWaarneming> HaalAlleFotoWaarnemingenOp()
     {
-        return _repository.HaalAlleTableSoortenOp();
-    }
-
-    public void RegistreerTableSoort(TableSoort tableSoort)
-    {
-        _repository.VoegTableSoortToe(tableSoort);
+        return _repository.HaalAlleFotoWaarnemingenOp();
     }
 
-    public bool VerwijderTableSoort(String soort)
+    public void RegistreerFotoWaarneming(FotoWaarneming fotoWaarneming)
+    {
+        _repository.VoegFotoWaarnemingToe(fotoWaarneming);
+    }
+
+    public bool VerwijderFotoWaarneming(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class TableSoortService
         //    return false;
         //}
 
-        _repository.VerwijderTableSoort(soort);
+        _repository.VerwijderFotoWaarneming(soort);
         return true;
     }
 }

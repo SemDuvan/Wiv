@@ -5,47 +5,47 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableSoortenController : ControllerBase
+    public class WetenschappelijkenamenController : ControllerBase
     {
-        private readonly TableSoortService _service;
+        private readonly WetenschappelijkenaamService _service;
 
-        public TableSoortenController(TableSoortService service)
+        public WetenschappelijkenamenController(WetenschappelijkenaamService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableSoortenOp()
+        public IActionResult HaalAlleWetenschappelijkenamenOp()
         {
-            var tableSoorten = _service.HaalAlleTableSoortenOp();
-            return Ok(tableSoorten);
+            var Wetenschappelijkenamen = _service.HaalAlleWetenschappelijkenamenOp();
+            return Ok(Wetenschappelijkenamen);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableSoortToe([FromBody] TableSoort tableSoort)
+        public IActionResult VoegWetenschappelijkenaamToe([FromBody] Wetenschappelijkenaam wetenschappelijkeNaam)
         {
-            if (tableSoort == null)
+            if (wetenschappelijkeNaam == null)
             {
-                return BadRequest("Soort mag niet null zijn.");
+                return BadRequest("Wetenschappelijke naam mag niet null zijn.");
             }
 
-            _service.RegistreerTableSoort(tableSoort);
-            return Ok("Soort toegevoegd.");
+            _service.RegistreerWetenschappelijkenaam(wetenschappelijkeNaam);
+            return Ok("Wetenschappelijke naam toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableSoort(String soort)
+        public IActionResult VerwijderWetenschappelijkenaam(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableSoort(soort);
+            var isVerwijderd = _service.VerwijderWetenschappelijkenaam(naam);
             if (!isVerwijderd)
             {
-                return NotFound($"Soort met naam {soort} niet gevonden.");
+                return NotFound($"Wetenschappelijke naam met naam {naam} niet gevonden.");
             }
 
-            return Ok($"Soort met naam {soort} is verwijderd.");
+            return Ok($"Wetenschappelijke naam met naam {naam} is verwijderd.");
         }
     }
 }

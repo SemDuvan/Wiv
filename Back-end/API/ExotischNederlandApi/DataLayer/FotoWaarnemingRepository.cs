@@ -59,7 +59,7 @@ internal class FotoWaarnemingRepository
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderTableSoort(String wid)
+    public void VerwijderFotoWaarneming(String wid)
     {
         using var connection = CreateOpenConnection();
 

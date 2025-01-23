@@ -1,22 +1,22 @@
-public class TableSoortService
+public class WeblinkWaarnemingService
 {
-    private readonly TableSoortRepository _repository;
+    private readonly WeblinkWaarnemingRepository _repository;
 
-    public TableSoortService()
+    public WeblinkWaarnemingService()
     {
-        _repository = new TableSoortRepository();
+        _repository = new WeblinkWaarnemingRepository();
     }
-    public List<TableSoort> HaalAlleTableSoortenOp()
+    public List<WeblinkWaarneming> HaalAlleWeblinkWaarnemingenOp()
     {
-        return _repository.HaalAlleTableSoortenOp();
-    }
-
-    public void RegistreerTableSoort(TableSoort tableSoort)
-    {
-        _repository.VoegTableSoortToe(tableSoort);
+        return _repository.HaalAlleWeblinkWaarnemingenOp();
     }
 
-    public bool VerwijderTableSoort(String soort)
+    public void RegistreerWeblinkWaarneming(WeblinkWaarneming weblinkWaarneming)
+    {
+        _repository.VoegWeblinkWaarnemingToe(weblinkWaarneming);
+    }
+
+    public bool VerwijderWeblinkWaarneming(String soort)
     {
         //TODO: implementeer 
         //var soort = _repository.HaalInheemseSoortOp(naam);
@@ -25,7 +25,7 @@ public class TableSoortService
         //    return false;
         //}
 
-        _repository.VerwijderTableSoort(soort);
+        _repository.VerwijderWeblinkWaarneming(soort);
         return true;
     }
 }

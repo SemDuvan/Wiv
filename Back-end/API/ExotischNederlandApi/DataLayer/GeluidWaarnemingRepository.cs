@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-internal class TableSoortRepository
+internal class GeluidWaarnemingRepository
 {
     private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
-    public TableSoortRepository()
+    public GeluidWaarnemingRepository()
     {
         InitializeDatabase();
     }
@@ -21,57 +21,54 @@ internal class TableSoortRepository
         return connection;
     }
 
-    public List<TableSoort> HaalAlleTableSoortenOp()
+    public List<GeluidWaarneming> HaalAlleGeluidWaarnemingenOp()
     {
         var connection = CreateOpenConnection();
 
-        var soorten = new List<TableSoort>();
+        var soorten = new List<GeluidWaarneming>();
         string selectQuery = @"
-            SELECT * FROM SOORT;";
+            SELECT * FROM GELUIDWAARNEMING;";
         using var command = new SqliteCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            int sid = reader.GetInt32(0);
-            string soort = reader.GetString(1);
-            string voorkomen = reader.GetString(2);
-            soorten.Add(new TableSoort
+            int wid = reader.GetInt32(0);
+            int gid = reader.GetInt32(1);
+            soorten.Add(new GeluidWaarneming
             (
-                sid,
-                soort,
-                voorkomen
+                wid,
+                gid
             ));
         }
 
         return soorten;
     }
-    public void VoegTableSoortToe(TableSoort tableSoort)
+    public void VoegGeluidWaarnemingToe(GeluidWaarneming geluidWaarneming)
     {
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Sid, Soort, Voorkomen)
-            VALUES (@Sid, @Soort, @Voorkomen);";
+            INSERT INTO SOORT (Wid, Gid)
+            VALUES (@Wid, @Gid);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Sid", tableSoort.Sid);
-        command.Parameters.AddWithValue("@Naam", tableSoort.Soort);
-        command.Parameters.AddWithValue("@LocatieNaam", tableSoort.Voorkomen);
+        command.Parameters.AddWithValue("@Wid", geluidWaarneming.Wid);
+        command.Parameters.AddWithValue("@Gid", geluidWaarneming.Gid);
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderTableSoort(String soort)
+    public void VerwijderGeluidWaarneming(String wid)
     {
         using var connection = CreateOpenConnection();
 
         string deleteQuery = @"
-        DELETE FROM SOORT
-        WHERE Soort = @Soort;";
+        DELETE FROM GELUIDWAARNEMING
+        WHERE Wid = @Wid;";
 
         using var command = new SqliteCommand(deleteQuery, connection);
-        command.Parameters.AddWithValue("@Soort", soort);
+        command.Parameters.AddWithValue("@Wid", wid);
 
         command.ExecuteNonQuery();
     }

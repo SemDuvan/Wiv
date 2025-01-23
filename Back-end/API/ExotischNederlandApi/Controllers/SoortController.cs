@@ -7,9 +7,9 @@ namespace MinimalApiExample.Controllers
     [Route("api/[controller]")]
     public class TableSoortenController : ControllerBase
     {
-        private readonly TableSoortService _service;
+        private readonly SoortService _service;
 
-        public TableSoortenController(TableSoortService service)
+        public TableSoortenController(SoortService service)
         {
             _service = service;
         }
@@ -37,15 +37,15 @@ namespace MinimalApiExample.Controllers
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableSoort(String soort)
+        public IActionResult VerwijderTableSoort(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableSoort(soort);
+            var isVerwijderd = _service.VerwijderTableSoort(naam);
             if (!isVerwijderd)
             {
-                return NotFound($"Soort met naam {soort} niet gevonden.");
+                return NotFound($"Soort met naam {naam} niet gevonden.");
             }
 
-            return Ok($"Soort met naam {soort} is verwijderd.");
+            return Ok($"Soort met naam {naam} is verwijderd.");
         }
     }
 }

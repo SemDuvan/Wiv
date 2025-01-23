@@ -1,8 +1,8 @@
-public class TableSoortService
+public class SoortService
 {
     private readonly TableSoortRepository _repository;
 
-    public TableSoortService()
+    public SoortService()
     {
         _repository = new TableSoortRepository();
     }

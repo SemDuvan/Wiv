@@ -5,47 +5,47 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableSoortenController : ControllerBase
+    public class GeluidWaarnemingController : ControllerBase
     {
-        private readonly TableSoortService _service;
+        private readonly GeluidWaarnemingService _service;
 
-        public TableSoortenController(TableSoortService service)
+        public GeluidWaarnemingController(GeluidWaarnemingService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableSoortenOp()
+        public IActionResult HaalAlleGeluidWaarnemingenOp()
         {
-            var tableSoorten = _service.HaalAlleTableSoortenOp();
-            return Ok(tableSoorten);
+            var geluidWaarneming = _service.HaalAlleGeluidWaarnemingenOp();
+            return Ok(geluidWaarneming);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableSoortToe([FromBody] TableSoort tableSoort)
+        public IActionResult VoegGeluidWaarnemingToe([FromBody] GeluidWaarneming geluidWaarneming)
         {
-            if (tableSoort == null)
+            if (geluidWaarneming == null)
             {
-                return BadRequest("Soort mag niet null zijn.");
+                return BadRequest("Geluid waarneming mag niet null zijn.");
             }
 
-            _service.RegistreerTableSoort(tableSoort);
-            return Ok("Soort toegevoegd.");
+            _service.RegistreerGeluidWaarneming(geluidWaarneming);
+            return Ok("Geluid waarneming toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableSoort(String soort)
+        public IActionResult VerwijderGeluidWaarneming(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableSoort(soort);
+            var isVerwijderd = _service.VerwijderGeluidWaarneming(naam);
             if (!isVerwijderd)
             {
-                return NotFound($"Soort met naam {soort} niet gevonden.");
+                return NotFound($"Geluid waarneming met naam {naam} niet gevonden.");
             }
 
-            return Ok($"Soort met naam {soort} is verwijderd.");
+            return Ok($"Geluid waarneming met naam {naam} is verwijderd.");
         }
     }
 }

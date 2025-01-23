@@ -5,47 +5,47 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableSoortenController : ControllerBase
+    public class FotoWaarnemingController : ControllerBase
     {
-        private readonly TableSoortService _service;
+        private readonly FotoWaarnemingService _service;
 
-        public TableSoortenController(TableSoortService service)
+        public FotoWaarnemingController(FotoWaarnemingService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleTableSoortenOp()
+        public IActionResult HaalAlleFotoWaarnemingenOp()
         {
-            var tableSoorten = _service.HaalAlleTableSoortenOp();
-            return Ok(tableSoorten);
+            var fotoWaarneming = _service.HaalAlleFotoWaarnemingenOp();
+            return Ok(fotoWaarneming);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegTableSoortToe([FromBody] TableSoort tableSoort)
+        public IActionResult VoegfotoWaarnemingToe([FromBody] FotoWaarneming fotoWaarneming)
         {
-            if (tableSoort == null)
+            if (fotoWaarneming == null)
             {
-                return BadRequest("Soort mag niet null zijn.");
+                return BadRequest("Foto waarneming mag niet null zijn.");
             }
 
-            _service.RegistreerTableSoort(tableSoort);
-            return Ok("Soort toegevoegd.");
+            _service.RegistreerFotoWaarneming(fotoWaarneming);
+            return Ok("Foto waarneming toegevoegd.");
         }
 
         // DELETE: api/Soorten/{naam}
         [HttpDelete("{naam}")]
-        public IActionResult VerwijderTableSoort(String soort)
+        public IActionResult VerwijderfotoWaarneming(String naam)
         {
-            var isVerwijderd = _service.VerwijderTableSoort(soort);
+            var isVerwijderd = _service.VerwijderFotoWaarneming(naam);
             if (!isVerwijderd)
             {
-                return NotFound($"Soort met naam {soort} niet gevonden.");
+                return NotFound($"Foto waarneming met naam {naam} niet gevonden.");
             }
 
-            return Ok($"Soort met naam {soort} is verwijderd.");
+            return Ok($"Foto waarneming met naam {naam} is verwijderd.");
         }
     }
 }
