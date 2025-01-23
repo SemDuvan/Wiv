@@ -6,8 +6,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); // Voeg Swagger/OpenAPI toe
 
 // Voeg jouw service toe aan de DI-container
-builder.Services.AddScoped<InheemseSoortService>();
-builder.Services.AddScoped<TableSoortService>();
+//builder.Services.AddScoped<InheemseSoortService>();
+builder.Services.AddScoped<SoortService>();
 
 // Voeg CORS-beleid toe
 builder.Services.AddCors(options =>

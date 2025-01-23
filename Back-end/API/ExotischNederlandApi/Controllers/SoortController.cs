@@ -5,11 +5,11 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class TableSoortenController : ControllerBase
+    public class SoortenController : ControllerBase
     {
-        private readonly TableSoortService _service;
+        private readonly SoortService _service;
 
-        public TableSoortenController(TableSoortService service)
+        public SoortenController(SoortService service)
         {
             _service = service;
         }
@@ -18,20 +18,20 @@ namespace MinimalApiExample.Controllers
         [HttpGet]
         public IActionResult HaalAlleSoortenOp()
         {
-            var soorten = _service.HaalAlleSoortenOp();
-            return Ok(soorten);
+            var Soorten = _service.HaalAlleSoortenOp();
+            return Ok(Soorten);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegSoortToe([FromBody] TableSoort Soort)
+        public IActionResult VoegSoortToe([FromBody] Soorten Soort)
         {
             if (Soort == null)
             {
                 return BadRequest("Soort mag niet null zijn.");
             }
 
-            _service.RegistreerInheemseSoort(Soort);
+            _service.RegistreerSoort(Soort);
             return Ok("Soort toegevoegd.");
         }
 
