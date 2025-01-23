@@ -49,7 +49,7 @@ internal class FotoWaarnemingRepository
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Wid, Fid)
+            INSERT INTO FOTOWAARNEMING (Wid, Fid)
             VALUES (@Wid, @Fid);";
 
         using var command = new SqliteCommand(insertQuery, connection);

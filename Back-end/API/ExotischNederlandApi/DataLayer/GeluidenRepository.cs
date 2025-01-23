@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-internal class GeluidRepository
+internal class GeluidenRepository
 {
     private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
-    public GeluidRepository()
+    public GeluidenRepository()
     {
         InitializeDatabase();
     }
@@ -21,11 +21,11 @@ internal class GeluidRepository
         return connection;
     }
 
-    public List<Geluid> HaalAlleGeluidsOp()
+    public List<Geluiden> HaalAlleGeluidenOp()
     {
         var connection = CreateOpenConnection();
 
-        var soorten = new List<Geluid>();
+        var soorten = new List<Geluiden>();
         string selectQuery = @"
             SELECT * FROM GELUID;";
         using var command = new SqliteCommand(selectQuery, connection);
@@ -34,38 +34,41 @@ internal class GeluidRepository
         while (reader.Read())
         {
             int gid = reader.GetInt32(0);
-            soorten.Add(new Geluid
+            string geluid = reader.GetString(1);
+            soorten.Add(new Geluiden
             (
-                    gid
+                    gid,
+                    geluid
             ));
         }
 
         return soorten;
     }
-    public void VoegGeluidToe(Geluid Geluid)
+    public void VoegGeluidToe(Geluiden Geluid)
     {
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Gid)
-            VALUES (@Gid);";
+            INSERT INTO GELUID (Gid, Geluid)
+            VALUES (@Gid, @Geluid);";
 
         using var command = new SqliteCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Gid", Geluid.Gid);
+        command.Parameters.AddWithValue("@Geluid", Geluid.Geluid);
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderGeluid(String gid)
+    public void VerwijderGeluid(String geluid)
     {
         using var connection = CreateOpenConnection();
 
         string deleteQuery = @"
         DELETE FROM GELUID
-        WHERE Gid = @Gid;";
+        WHERE Geluid = @Geluid;";
 
         using var command = new SqliteCommand(deleteQuery, connection);
-        command.Parameters.AddWithValue("@Gid", gid);
+        command.Parameters.AddWithValue("@Geluid", geluid);
 
         command.ExecuteNonQuery();
     }

@@ -51,7 +51,7 @@ internal class WetenschappelijkenaamRepository
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (WNid, Naam, WetenschappelijkeNaam)
+            INSERT INTO WETENSCHAPPELIJKENAAM (WNid, Naam, WetenschappelijkeNaam)
             VALUES (@WNid, @Naam, @WetenschappelijkeNaam);";
 
         using var command = new SqliteCommand(insertQuery, connection);

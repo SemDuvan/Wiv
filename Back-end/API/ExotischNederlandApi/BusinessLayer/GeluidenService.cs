@@ -1,17 +1,17 @@
-public class GeluidService
+public class GeluidenService
 {
-    private readonly GeluidRepository _repository;
+    private readonly GeluidenRepository _repository;
 
-    public GeluidService()
+    public GeluidenService()
     {
-        _repository = new GeluidRepository();
+        _repository = new GeluidenRepository();
     }
-    public List<Geluid> HaalAlleGeluidsOp()
+    public List<Geluiden> HaalAlleGeluidenOp()
     {
-        return _repository.HaalAlleGeluidsOp();
+        return _repository.HaalAlleGeluidenOp();
     }
 
-    public void RegistreerGeluid(Geluid Geluid)
+    public void RegistreerGeluid(Geluiden Geluid)
     {
         _repository.VoegGeluidToe(Geluid);
     }
