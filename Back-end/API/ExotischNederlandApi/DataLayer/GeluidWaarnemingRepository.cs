@@ -49,7 +49,7 @@ internal class GeluidWaarnemingRepository
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Wid, Gid)
+            INSERT INTO GELUIDWAARNEMING (Wid, Gid)
             VALUES (@Wid, @Gid);";
 
         using var command = new SqliteCommand(insertQuery, connection);

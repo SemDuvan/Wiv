@@ -73,7 +73,7 @@ internal class WaarnemingRepository
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Wid, Omschrijving, Sid, Datum, Tijd, WNid, Lid, Toelichting, Aantal, Geslacht, Gebruiker, Zekerheid, Webid, ManierDelen)
+            INSERT INTO WAARNEMING (Wid, Omschrijving, Sid, Datum, Tijd, WNid, Lid, Toelichting, Aantal, Geslacht, Gebruiker, Zekerheid, Webid, ManierDelen)
             VALUES (@Wid, @Omschrijving, @Sid, @Datum, @Tijd, @WNid, @Lid, @Toelichting, @Aantal, @Geslacht, @Gebruiker, @Zekerheid, @Webid, @ManierDelen);";
 
         using var command = new SqliteCommand(insertQuery, connection);

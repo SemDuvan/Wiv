@@ -49,7 +49,7 @@ internal class WeblinkRepository
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Webid, Weblink)
+            INSERT INTO WEBLINK (Webid, Weblink)
             VALUES (@Webid, @Weblink);";
 
         using var command = new SqliteCommand(insertQuery, connection);

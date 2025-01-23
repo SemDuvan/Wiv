@@ -5,26 +5,26 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class GeluidsController : ControllerBase
+    public class GeluidenController : ControllerBase
     {
-        private readonly GeluidService _service;
+        private readonly GeluidenService _service;
 
-        public GeluidsController(GeluidService service)
+        public GeluidenController(GeluidenService service)
         {
             _service = service;
         }
         
         // GET: api/Soorten
         [HttpGet]
-        public IActionResult HaalAlleGeluidsOp()
+        public IActionResult HaalAlleGeluidenOp()
         {
-            var Geluids = _service.HaalAlleGeluidsOp();
-            return Ok(Geluids);
+            var Geluiden = _service.HaalAlleGeluidenOp();
+            return Ok(Geluiden);
         }
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegGeluidToe([FromBody] Geluid Geluid)
+        public IActionResult VoegGeluidToe([FromBody] Geluiden Geluid)
         {
             if (Geluid == null)
             {

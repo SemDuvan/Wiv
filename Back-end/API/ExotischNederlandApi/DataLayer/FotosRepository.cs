@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-internal class FotoRepository
+internal class FotosRepository
 {
     private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
-    public FotoRepository()
+    public FotosRepository()
     {
         InitializeDatabase();
     }
@@ -21,11 +21,11 @@ internal class FotoRepository
         return connection;
     }
 
-    public List<Foto> HaalAlleFotosOp()
+    public List<Fotos> HaalAlleFotosOp()
     {
         var connection = CreateOpenConnection();
 
-        var soorten = new List<Foto>();
+        var soorten = new List<Fotos>();
         string selectQuery = @"
             SELECT * FROM FOTO;";
         using var command = new SqliteCommand(selectQuery, connection);
@@ -34,38 +34,41 @@ internal class FotoRepository
         while (reader.Read())
         {
             int fid = reader.GetInt32(0);
-            soorten.Add(new Foto
+            string foto = reader.GetString(1);
+            soorten.Add(new Fotos
             (
-                fid
+                fid,
+                foto
             ));
         }
 
         return soorten;
     }
-    public void VoegFotoToe(Foto Foto)
+    public void VoegFotoToe(Fotos Foto)
     {
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Fid)
-            VALUES (@Fid);";
+            INSERT INTO FOTO (Fid, Foto)
+            VALUES (@Fid, @Foto);";
 
         using var command = new SqliteCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Fid", Foto.Fid);
+        command.Parameters.AddWithValue("@Foto", Foto.Foto);
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderFoto(String fid)
+    public void VerwijderFoto(String foto)
     {
         using var connection = CreateOpenConnection();
 
         string deleteQuery = @"
         DELETE FROM FOTO
-        WHERE Fid = @Fid;";
+        WHERE Foto = @Foto;";
 
         using var command = new SqliteCommand(deleteQuery, connection);
-        command.Parameters.AddWithValue("@Fid", fid);
+        command.Parameters.AddWithValue("@Foto", foto);
 
         command.ExecuteNonQuery();
     }

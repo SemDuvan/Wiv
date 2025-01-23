@@ -1,17 +1,17 @@
-public class FotoService
+public class FotosService
 {
-    private readonly FotoRepository _repository;
+    private readonly FotosRepository _repository;
 
-    public FotoService()
+    public FotosService()
     {
-        _repository = new FotoRepository();
+        _repository = new FotosRepository();
     }
-    public List<Foto> HaalAlleFotosOp()
+    public List<Fotos> HaalAlleFotosOp()
     {
         return _repository.HaalAlleFotosOp();
     }
 
-    public void RegistreerFoto(Foto Foto)
+    public void RegistreerFoto(Fotos Foto)
     {
         _repository.VoegFotoToe(Foto);
     }

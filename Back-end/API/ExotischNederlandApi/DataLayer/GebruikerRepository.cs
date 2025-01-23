@@ -64,7 +64,7 @@ internal class GebruikerRepository
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Weergavenaam, Naam, Email, Biografie, Taal, Geslacht, Geboortejaar, Telefoonnummer, Land)
+            INSERT INTO GEBRUIKER (Weergavenaam, Naam, Email, Biografie, Taal, Geslacht, Geboortejaar, Telefoonnummer, Land)
             VALUES (@Weergavenaam, @Naam, @Email, @Biografie, @Taal, @Geslacht, @Geboortejaar, @Telefoonnummer, @Land);";
 
         using var command = new SqliteCommand(insertQuery, connection);

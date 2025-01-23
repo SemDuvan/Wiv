@@ -5,11 +5,11 @@ namespace MinimalApiExample.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class FotoController : ControllerBase
+    public class FotosController : ControllerBase
     {
-        private readonly FotoService _service;
+        private readonly FotosService _service;
 
-        public FotoController(FotoService service)
+        public FotosController(FotosService service)
         {
             _service = service;
         }
@@ -24,7 +24,7 @@ namespace MinimalApiExample.Controllers
 
         // POST: api/Soorten
         [HttpPost]
-        public IActionResult VoegFotoToe([FromBody] Foto Foto)
+        public IActionResult VoegFotoToe([FromBody] Fotos Foto)
         {
             if (Foto == null)
             {
