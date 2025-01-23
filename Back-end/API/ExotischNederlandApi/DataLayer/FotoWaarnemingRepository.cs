@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 
-internal class TableSoortRepository
+internal class FotoWaarnemingRepository
 {
     private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
 
-    public TableSoortRepository()
+    public FotoWaarnemingRepository()
     {
         InitializeDatabase();
     }
@@ -21,57 +21,54 @@ internal class TableSoortRepository
         return connection;
     }
 
-    public List<TableSoort> HaalAlleTableSoortenOp()
+    public List<FotoWaarneming> HaalAlleFotoWaarnemingenOp()
     {
         var connection = CreateOpenConnection();
 
-        var soorten = new List<TableSoort>();
+        var soorten = new List<FotoWaarneming>();
         string selectQuery = @"
-            SELECT * FROM SOORT;";
+            SELECT * FROM FOTOWAARNEMING;";
         using var command = new SqliteCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            int sid = reader.GetInt32(0);
-            string soort = reader.GetString(1);
-            string voorkomen = reader.GetString(2);
-            soorten.Add(new TableSoort
+            int wid = reader.GetInt32(0);
+            int fid = reader.GetInt32(1);
+            soorten.Add(new FotoWaarneming
             (
-                sid,
-                soort,
-                voorkomen
+                wid,
+                fid
             ));
         }
 
         return soorten;
     }
-    public void VoegTableSoortToe(TableSoort tableSoort)
+    public void VoegFotoWaarnemingToe(FotoWaarneming fotoWaarneming)
     {
         var connection = CreateOpenConnection();
 
         string insertQuery = @"
-            INSERT INTO SOORT (Sid, Soort, Voorkomen)
-            VALUES (@Sid, @Soort, @Voorkomen);";
+            INSERT INTO SOORT (Wid, Fid)
+            VALUES (@Wid, @Fid);";
 
         using var command = new SqliteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@Sid", tableSoort.Sid);
-        command.Parameters.AddWithValue("@Naam", tableSoort.Soort);
-        command.Parameters.AddWithValue("@LocatieNaam", tableSoort.Voorkomen);
+        command.Parameters.AddWithValue("@Wid", fotoWaarneming.Wid);
+        command.Parameters.AddWithValue("@Fid", fotoWaarneming.Fid);
 
         command.ExecuteNonQuery();
     }
 
-    public void VerwijderTableSoort(String soort)
+    public void VerwijderTableSoort(String wid)
     {
         using var connection = CreateOpenConnection();
 
         string deleteQuery = @"
-        DELETE FROM SOORT
-        WHERE Soort = @Soort;";
+        DELETE FROM FOTOWAARNEMING
+        WHERE Wid = @Wid;";
 
         using var command = new SqliteCommand(deleteQuery, connection);
-        command.Parameters.AddWithValue("@Soort", soort);
+        command.Parameters.AddWithValue("@Wid", wid);
 
         command.ExecuteNonQuery();
     }
