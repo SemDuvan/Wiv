@@ -1,63 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Device.Location;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace map
 {
-    /// <summary>
-    /// Interaction logic for ProfileWindow.xaml
-    /// </summary>
     public partial class ProfileWindow : Window
     {
         public ProfileWindow()
         {
             InitializeComponent();
-            GetLocationEvent();
+            LoadObservations();
         }
 
-        GeoCoordinateWatcher watcher;
-        public void GetLocationEvent()
+        private void LoadObservations()
         {
-            this.watcher = new GeoCoordinateWatcher();
-            this.watcher.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(watcher_PositionChanged);
-            bool started = this.watcher.TryStart(false, TimeSpan.FromMilliseconds(20000));
+            // Dummy data for observations
+            var observations = new List<Observation>
+            {
+                new Observation { Name = "Vos", Category = "Fauna", Description = "Rood", DateTime = DateTime.Now.ToString("g") },
+                new Observation { Name = "Eik", Category = "Flora", Description = "Groot", DateTime = DateTime.Now.ToString("g") }
+            };
+
+            // Bind the data to the ListView
+            listView.ItemsSource = observations;
         }
 
-        void watcher_PositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            PrintPosition(e.Position.Location.Latitude, e.Position.Location.Longitude);
-        }
-
-        void PrintPosition(double Latitude, double Longitude)
-        {
-            MessageBox.Show("latitude: " + Latitude + " longitude: " + Longitude);
-            txtLatitude.Text = Latitude.ToString();
-            txtLongitude.Text = Longitude.ToString();
-        }
-
-        private void load_Click(object sender, RoutedEventArgs e)
-        {
-            SqlConnection con = new SqlConnection(@"constr");
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO [dbo].[LocationTable]([Id],[Latitude],[Longitude]) VALUES(@Id, @Latitude, @Longitude)", con);
-            cmd.Parameters.AddWithValue("@Id", int.Parse(txtId.Text));
-            cmd.Parameters.AddWithValue("@Latitude", float.Parse(txtLatitude.Text));
-            cmd.Parameters.AddWithValue("@Longitude", float.Parse(txtLongitude.Text));
-            con.Open();
-            cmd.ExecuteNonQuery();
-            MessageBox.Show("Data created successfully");
-            con.Close();
+            var indexWindow = new Index();
+            indexWindow.Show();
+            this.Close();
         }
     }
+
+    public class Observation
+    {
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public string Description { get; set; }
+        public string DateTime { get; set; }
+    }
 }
+
