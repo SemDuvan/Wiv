@@ -1,8 +1,8 @@
-using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
 
 internal class SoortRepository
 {
-    private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
+    private readonly string _connectionString = "server=20.67.52.115;uid=root;pwd=P@ssword1;database=testdb";
 
     public SoortRepository()
     {
@@ -14,9 +14,9 @@ internal class SoortRepository
         CreateOpenConnection();
     }
 
-    private SqliteConnection CreateOpenConnection()
+    private MySqlConnection CreateOpenConnection()
     {
-        var connection = new SqliteConnection(_connectionString);
+        var connection = new MySqlConnection(_connectionString);
         connection.Open();
         return connection;
     }
@@ -28,7 +28,7 @@ internal class SoortRepository
         var soorten = new List<Soorten>();
         string selectQuery = @"
             SELECT * FROM SOORT;";
-        using var command = new SqliteCommand(selectQuery, connection);
+        using var command = new MySqlCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
@@ -54,7 +54,7 @@ internal class SoortRepository
             INSERT INTO SOORT (Sid, Soort, Voorkomen)
             VALUES (@Sid, @Soort, @Voorkomen);";
 
-        using var command = new SqliteCommand(insertQuery, connection);
+        using var command = new MySqlCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Sid", Soort.Sid);
         command.Parameters.AddWithValue("@Naam", Soort.Soort);
         command.Parameters.AddWithValue("@LocatieNaam", Soort.Voorkomen);
@@ -70,7 +70,7 @@ internal class SoortRepository
         DELETE FROM SOORT
         WHERE Soort = @Soort;";
 
-        using var command = new SqliteCommand(deleteQuery, connection);
+        using var command = new MySqlCommand(deleteQuery, connection);
         command.Parameters.AddWithValue("@Soort", soort);
 
         command.ExecuteNonQuery();

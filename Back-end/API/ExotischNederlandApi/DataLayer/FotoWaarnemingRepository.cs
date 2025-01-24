@@ -1,8 +1,8 @@
-using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
 
 internal class FotoWaarnemingRepository
 {
-    private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
+    private readonly string _connectionString = "server=20.67.52.115;uid=root;pwd=P@ssword1;database=testdb";
 
     public FotoWaarnemingRepository()
     {
@@ -14,9 +14,9 @@ internal class FotoWaarnemingRepository
         CreateOpenConnection();
     }
 
-    private SqliteConnection CreateOpenConnection()
+    private MySqlConnection CreateOpenConnection()
     {
-        var connection = new SqliteConnection(_connectionString);
+        var connection = new MySqlConnection(_connectionString);
         connection.Open();
         return connection;
     }
@@ -28,7 +28,7 @@ internal class FotoWaarnemingRepository
         var soorten = new List<FotoWaarneming>();
         string selectQuery = @"
             SELECT * FROM FOTOWAARNEMING;";
-        using var command = new SqliteCommand(selectQuery, connection);
+        using var command = new MySqlCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
@@ -52,7 +52,7 @@ internal class FotoWaarnemingRepository
             INSERT INTO FOTOWAARNEMING (Wid, Fid)
             VALUES (@Wid, @Fid);";
 
-        using var command = new SqliteCommand(insertQuery, connection);
+        using var command = new MySqlCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Wid", fotoWaarneming.Wid);
         command.Parameters.AddWithValue("@Fid", fotoWaarneming.Fid);
 
@@ -67,7 +67,7 @@ internal class FotoWaarnemingRepository
         DELETE FROM FOTOWAARNEMING
         WHERE Wid = @Wid;";
 
-        using var command = new SqliteCommand(deleteQuery, connection);
+        using var command = new MySqlCommand(deleteQuery, connection);
         command.Parameters.AddWithValue("@Wid", wid);
 
         command.ExecuteNonQuery();

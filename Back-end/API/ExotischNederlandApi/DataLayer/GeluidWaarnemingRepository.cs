@@ -1,8 +1,8 @@
-using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
 
 internal class GeluidWaarnemingRepository
 {
-    private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
+    private readonly string _connectionString = "server=20.67.52.115;uid=root;pwd=P@ssword1;database=testdb";
 
     public GeluidWaarnemingRepository()
     {
@@ -14,9 +14,9 @@ internal class GeluidWaarnemingRepository
         CreateOpenConnection();
     }
 
-    private SqliteConnection CreateOpenConnection()
+    private MySqlConnection CreateOpenConnection()
     {
-        var connection = new SqliteConnection(_connectionString);
+        var connection = new MySqlConnection(_connectionString);
         connection.Open();
         return connection;
     }
@@ -28,7 +28,7 @@ internal class GeluidWaarnemingRepository
         var soorten = new List<GeluidWaarneming>();
         string selectQuery = @"
             SELECT * FROM GELUIDWAARNEMING;";
-        using var command = new SqliteCommand(selectQuery, connection);
+        using var command = new MySqlCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
@@ -52,7 +52,7 @@ internal class GeluidWaarnemingRepository
             INSERT INTO GELUIDWAARNEMING (Wid, Gid)
             VALUES (@Wid, @Gid);";
 
-        using var command = new SqliteCommand(insertQuery, connection);
+        using var command = new MySqlCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Wid", geluidWaarneming.Wid);
         command.Parameters.AddWithValue("@Gid", geluidWaarneming.Gid);
 
@@ -67,7 +67,7 @@ internal class GeluidWaarnemingRepository
         DELETE FROM GELUIDWAARNEMING
         WHERE Wid = @Wid;";
 
-        using var command = new SqliteCommand(deleteQuery, connection);
+        using var command = new MySqlCommand(deleteQuery, connection);
         command.Parameters.AddWithValue("@Wid", wid);
 
         command.ExecuteNonQuery();
