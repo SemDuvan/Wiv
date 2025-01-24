@@ -1,8 +1,8 @@
-using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
 
 internal class GebruikerRepository
 {
-    private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
+    private readonly string _connectionString = "server=20.67.52.115;uid=root;pwd=P@ssword1;database=testdb";
 
     public GebruikerRepository()
     {
@@ -14,9 +14,9 @@ internal class GebruikerRepository
         CreateOpenConnection();
     }
 
-    private SqliteConnection CreateOpenConnection()
+    private MySqlConnection CreateOpenConnection()
     {
-        var connection = new SqliteConnection(_connectionString);
+        var connection = new MySqlConnection(_connectionString);
         connection.Open();
         return connection;
     }
@@ -28,7 +28,7 @@ internal class GebruikerRepository
         var soorten = new List<Gebruiker>();
         string selectQuery = @"
             SELECT * FROM GEBRUIKER;";
-        using var command = new SqliteCommand(selectQuery, connection);
+        using var command = new MySqlCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
@@ -67,7 +67,7 @@ internal class GebruikerRepository
             INSERT INTO GEBRUIKER (Weergavenaam, Naam, Email, Biografie, Taal, Geslacht, Geboortejaar, Telefoonnummer, Land)
             VALUES (@Weergavenaam, @Naam, @Email, @Biografie, @Taal, @Geslacht, @Geboortejaar, @Telefoonnummer, @Land);";
 
-        using var command = new SqliteCommand(insertQuery, connection);
+        using var command = new MySqlCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Weergavenaam", Gebruiker.Weergavenaam);
         command.Parameters.AddWithValue("@Naam", Gebruiker.Naam);
         command.Parameters.AddWithValue("@Email", Gebruiker.Email);
@@ -90,7 +90,7 @@ internal class GebruikerRepository
         DELETE FROM GEBRUIKER
         WHERE Weergavenaam = @Weergavenaam;";
 
-        using var command = new SqliteCommand(deleteQuery, connection);
+        using var command = new MySqlCommand(deleteQuery, connection);
         command.Parameters.AddWithValue("@Weergavenaam", weergavenaam);
 
         command.ExecuteNonQuery();

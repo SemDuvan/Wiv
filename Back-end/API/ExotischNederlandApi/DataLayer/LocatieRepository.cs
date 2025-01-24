@@ -1,8 +1,8 @@
-using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
 
 internal class LocatieRepository
 {
-    private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
+    private readonly string _connectionString = "server=20.67.52.115;uid=root;pwd=P@ssword1;database=testdb";
 
     public LocatieRepository()
     {
@@ -14,9 +14,9 @@ internal class LocatieRepository
         CreateOpenConnection();
     }
 
-    private SqliteConnection CreateOpenConnection()
+    private MySqlConnection CreateOpenConnection()
     {
-        var connection = new SqliteConnection(_connectionString);
+        var connection = new MySqlConnection(_connectionString);
         connection.Open();
         return connection;
     }
@@ -28,7 +28,7 @@ internal class LocatieRepository
         var soorten = new List<Locatie>();
         string selectQuery = @"
             SELECT * FROM LOCATIE;";
-        using var command = new SqliteCommand(selectQuery, connection);
+        using var command = new MySqlCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
@@ -58,7 +58,7 @@ internal class LocatieRepository
             INSERT INTO LOCATIE (Lid, Locatienaam, Provincie, Breedtegraad, Lengtegraad)
             VALUES (@Lid, @Locatienaam, @Provincie, @Breedtegraad, @Lengtegraad);";
 
-        using var command = new SqliteCommand(insertQuery, connection);
+        using var command = new MySqlCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Lid", Locatie.Lid);
         command.Parameters.AddWithValue("@Locatienaam", Locatie.Locatienaam);
         command.Parameters.AddWithValue("@Provincie", Locatie.Provincie);
@@ -76,7 +76,7 @@ internal class LocatieRepository
         DELETE FROM LOCATIE
         WHERE Lid = @Lid;";
 
-        using var command = new SqliteCommand(deleteQuery, connection);
+        using var command = new MySqlCommand(deleteQuery, connection);
         command.Parameters.AddWithValue("@Lid", lid);
 
         command.ExecuteNonQuery();

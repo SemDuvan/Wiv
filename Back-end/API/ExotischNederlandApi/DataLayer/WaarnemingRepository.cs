@@ -1,8 +1,8 @@
-using Microsoft.Data.Sqlite;
+using MySql.Data.MySqlClient;
 
 internal class WaarnemingRepository
 {
-    private readonly string _connectionString = @"Data Source=C:\Programming\Beau\Back-end\API\Scripts\ExotischNederland.db";
+    private readonly string _connectionString = "server=20.67.52.115;uid=root;pwd=P@ssword1;database=testdb";
 
     public WaarnemingRepository()
     {
@@ -14,9 +14,9 @@ internal class WaarnemingRepository
         CreateOpenConnection();
     }
 
-    private SqliteConnection CreateOpenConnection()
+    private MySqlConnection CreateOpenConnection()
     {
-        var connection = new SqliteConnection(_connectionString);
+        var connection = new MySqlConnection(_connectionString);
         connection.Open();
         return connection;
     }
@@ -28,7 +28,7 @@ internal class WaarnemingRepository
         var soorten = new List<Waarneming>();
         string selectQuery = @"
             SELECT * FROM WAARNEMING;";
-        using var command = new SqliteCommand(selectQuery, connection);
+        using var command = new MySqlCommand(selectQuery, connection);
 
         using var reader = command.ExecuteReader();
         while (reader.Read())
@@ -76,7 +76,7 @@ internal class WaarnemingRepository
             INSERT INTO WAARNEMING (Wid, Omschrijving, Sid, Datum, Tijd, WNid, Lid, Toelichting, Aantal, Geslacht, Gebruiker, Zekerheid, Webid, ManierDelen)
             VALUES (@Wid, @Omschrijving, @Sid, @Datum, @Tijd, @WNid, @Lid, @Toelichting, @Aantal, @Geslacht, @Gebruiker, @Zekerheid, @Webid, @ManierDelen);";
 
-        using var command = new SqliteCommand(insertQuery, connection);
+        using var command = new MySqlCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Wid", waarneming.Wid);
         command.Parameters.AddWithValue("@Omschrijving", waarneming.Omschrijving);
         command.Parameters.AddWithValue("@Sid", waarneming.Sid);
@@ -103,7 +103,7 @@ internal class WaarnemingRepository
         DELETE FROM WAARNEMING
         WHERE Omschrijving = @Omschrijving;";
 
-        using var command = new SqliteCommand(deleteQuery, connection);
+        using var command = new MySqlCommand(deleteQuery, connection);
         command.Parameters.AddWithValue("@Omschrijving", omschrijving);
 
         command.ExecuteNonQuery();
