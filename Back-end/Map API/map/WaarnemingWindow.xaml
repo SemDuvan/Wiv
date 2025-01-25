@@ -75,14 +75,14 @@
 
         <!-- Form on the right -->
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
-            <TextBlock Text="Naam" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
+            <TextBlock Text="Naam*" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
             <TextBox x:Name="nameTextBox" Height="30" Margin="0,0,0,8"/>
-            <TextBlock Text="Categorie" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
+            <TextBlock Text="Categorie*" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Button Content="Flora" Padding="10,5" Margin="0,0,10,0" Click="Flora_Click"/>
-                <Button Content="Fauna" Padding="10,5" Click="Fauna_Click"/>
+                <Button x:Name="FloraButton" Content="Flora" Padding="10,5" Margin="0,0,10,0" Click="Flora_Click"/>
+                <Button x:Name="FaunaButton" Content="Fauna" Padding="10,5" Click="Fauna_Click"/>
             </StackPanel>
-            <TextBlock Text="Beschrijving" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
+            <TextBlock Text="Beschrijving*" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
             <TextBox x:Name="descriptionTextBox" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,10"/>
             <Button Content="Verzend" Padding="10,5" Click="Verzend_Click"/>
         </StackPanel>

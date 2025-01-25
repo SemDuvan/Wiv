@@ -57,7 +57,7 @@
         </Grid.RowDefinitions>
 
         <!-- Back button in the top left corner -->
-        <Button Content="Back" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15" Padding="20,10"/>
+        <Button Content="Back" Click="BackButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15"/>
 
         <!-- ListView to display observations -->
         <ListView x:Name="listView" Grid.Row="1" Margin="20" Background="#2E2E2E" Foreground="White" d:ItemsSource="{d:SampleData ItemCount=5}">

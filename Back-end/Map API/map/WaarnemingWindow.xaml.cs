@@ -39,28 +39,59 @@ namespace map
         private void Flora_Click(object sender, RoutedEventArgs e)
         {
             selectedCategory = "Flora";
+            UpdateCategoryButtonStyles();
         }
 
         private void Fauna_Click(object sender, RoutedEventArgs e)
         {
             selectedCategory = "Fauna";
+            UpdateCategoryButtonStyles();
         }
+
+        private void UpdateCategoryButtonStyles()
+        {
+            // Haal de standaardkleur en geselecteerde kleur op
+            var defaultColor = (Brush)new BrushConverter().ConvertFrom("#53c009"); // Groen uit de Style
+            var selectedColor = Brushes.Gray;
+
+            // Stel kleuren in op basis van geselecteerde categorie
+            FloraButton.Background = selectedCategory == "Flora" ? selectedColor : defaultColor;
+            FaunaButton.Background = selectedCategory == "Fauna" ? selectedColor : defaultColor;
+        }
+
 
         private async void Verzend_Click(object sender, RoutedEventArgs e)
         {
-            string name = nameTextBox.Text;
-            string description = descriptionTextBox.Text;
-            string dateTime = DateTime.Now.ToString("g"); // "g" format geeft een korte datum en tijd weer
-            var location = await locationService.GetLocationAsync();
-            if (location.Latitude == 0 && location.Longitude == 0)
+            // Disable de knop om meerdere klikken te voorkomen
+            var button = sender as Button;
+            button.IsEnabled = false;
+
+            try
             {
-                MessageBox.Show($"{selectedCategory} {name} {description}\nDatum en tijd: {dateTime}\nLocatie onbekend", "Invoer");
+                string name = nameTextBox.Text;
+                string description = descriptionTextBox.Text;
+                string dateTime = DateTime.Now.ToString("g"); // "g" format geeft een korte datum en tijd weer
+                var location = await locationService.GetLocationAsync();
+                if (location.Latitude == 0 && location.Longitude == 0)
+                {
+                    MessageBox.Show($"{selectedCategory} {name} {description}\nDatum en tijd: {dateTime}\nLocatie onbekend", "Invoer");
+                }
+                else
+                {
+                    MessageBox.Show($"{selectedCategory} {name} {description}\nDatum en tijd: {dateTime}\nLatitude: {location.Latitude}, Longitude: {location.Longitude}", "Invoer");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show($"{selectedCategory} {name} {description}\nDatum en tijd: {dateTime}\nLatitude: {location.Latitude}, Longitude: {location.Longitude}", "Invoer");
+                MessageBox.Show($"Er is een fout opgetreden: {ex.Message}", "Fout");
+            }
+            finally
+            {
+                // Schakel de knop weer in
+                button.IsEnabled = true;
             }
         }
+
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             Index Index = new Index();
