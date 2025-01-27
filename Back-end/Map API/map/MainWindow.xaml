@@ -39,9 +39,22 @@
 
         <wv2:WebView2 x:Name="webView" Grid.Row="0" Margin="10" />
 
-        <!-- Button to update marker position -->
-        <Button x:Name="markerButton" Click="marker_Click" Grid.Row="1" Height="40" Width="120">
-            Update Marker
-        </Button>
+        <!-- Grid to hold the buttons in the bottom row -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Back button in the bottom left corner -->
+            <Button Content="Back" Background="#53c009" Click="BackButton_Click" Height="40" Width="120" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10"/>
+
+            <!-- Button to update marker position in the center -->
+            <Button x:Name="markerButton" Click="marker_Click" Height="40" Width="120" Grid.Column="1" HorizontalAlignment="Left" Margin="200,0,0,0">
+                Update Marker
+            </Button>
+        </Grid>
     </Grid>
 </Window>
+
