@@ -45,6 +45,12 @@ namespace map
                 getAPI.AddMarker(location.Latitude, location.Longitude);
             }
         }
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Index indexWindow = new Index();
+            indexWindow.Show();
+            this.Close();
+        }
     }
 }
 
