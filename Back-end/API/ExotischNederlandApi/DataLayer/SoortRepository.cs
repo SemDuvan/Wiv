@@ -57,7 +57,7 @@ internal class SoortRepository
         using var command = new MySqlCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Sid", Soort.Sid);
         command.Parameters.AddWithValue("@Naam", Soort.Soort);
-        command.Parameters.AddWithValue("@LocatieNaam", Soort.Voorkomen);
+        command.Parameters.AddWithValue("@Voorkomen", Soort.Voorkomen);
 
         command.ExecuteNonQuery();
     }
