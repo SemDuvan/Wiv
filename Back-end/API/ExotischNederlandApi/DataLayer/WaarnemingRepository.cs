@@ -36,8 +36,9 @@ internal class WaarnemingRepository
             int wid = reader.GetInt32(0);
             string omschrijving = reader.GetString(1);
             int sid = reader.GetInt32(2);
-            string datum = reader.GetString(3);
-            string tijd = reader.GetString(4);
+            DateTime datum = reader.GetDateTime(3);
+            TimeSpan tijdSpan = reader.GetTimeSpan(4);
+            DateTime tijd = new DateTime(tijdSpan.Ticks);
             int wnid = reader.GetInt32(5);
             int lid = reader.GetInt32(6);
             string toelichting = reader.GetString(7);
@@ -52,8 +53,8 @@ internal class WaarnemingRepository
                 wid,
                 omschrijving,
                 sid,
-                datum,
-                tijd,
+                datum.ToString("yyyy-MM-dd"),
+                tijd.ToString("HH:mm:ss"),
                 wnid,
                 lid,
                 toelichting,

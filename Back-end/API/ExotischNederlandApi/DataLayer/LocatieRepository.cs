@@ -62,7 +62,7 @@ internal class LocatieRepository
         command.Parameters.AddWithValue("@Lid", Locatie.Lid);
         command.Parameters.AddWithValue("@Locatienaam", Locatie.Locatienaam);
         command.Parameters.AddWithValue("@Provincie", Locatie.Provincie);
-        command.Parameters.AddWithValue("@Breedtegraat", Locatie.Breedtegraad);
+        command.Parameters.AddWithValue("@Breedtegraad", Locatie.Breedtegraad);
         command.Parameters.AddWithValue("@Lengtegraad", Locatie.Lengtegraad);
 
         command.ExecuteNonQuery();
