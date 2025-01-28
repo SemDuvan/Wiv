@@ -77,10 +77,18 @@
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
             <TextBlock Text="Naam*" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
             <TextBox x:Name="nameTextBox" Height="30" Margin="0,0,0,8"/>
-            <TextBlock Text="Categorie*" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
+            <TextBlock Text="Soort-aantal*" Foreground="White" FontSize="16" Margin="0,0,0,10" Width="424"/>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBox x:Name="soortTextBox" Height="30" Width="300" Margin="0,0,10,0"/>
+                <StackPanel Height="31">
+                    
+                    <TextBox x:Name="aantalTextBox" Height="49" Width="100" PreviewTextInput="AantalTextBox_PreviewTextInput"/>
+                </StackPanel>
+            </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <Button x:Name="FloraButton" Content="Flora" Padding="10,5" Margin="0,0,10,0" Click="Flora_Click"/>
-                <Button x:Name="FaunaButton" Content="Fauna" Padding="10,5" Click="Fauna_Click"/>
+                <TextBlock Text="Zeldzaam?" Foreground="White" FontSize="16" Margin="0,0,10,0"/>
+                <CheckBox x:Name="zeldzaamCheckBox" VerticalAlignment="Center"/>
             </StackPanel>
             <TextBlock Text="Beschrijving*" Foreground="White" FontSize="16" Margin="0,0,0,10"/>
             <TextBox x:Name="descriptionTextBox" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,10"/>
@@ -88,3 +96,4 @@
         </StackPanel>
     </Grid>
 </Window>
+

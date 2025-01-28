@@ -9,7 +9,7 @@ namespace map
     public partial class MainWindow : Window
     {
         private LocationService locationService;
-        private GetAPI getAPI;
+        private PlaatsMarker getAPI;
 
         public MainWindow()
         {
@@ -20,7 +20,7 @@ namespace map
 
         private async void InitializeWebView()
         {
-            getAPI = new GetAPI(webView);
+            getAPI = new PlaatsMarker(webView);
             string azureMapsKey = ConfigurationManager.AppSettings["AzureMapsKey"];
             await getAPI.InitializeMapAsync(azureMapsKey);
 

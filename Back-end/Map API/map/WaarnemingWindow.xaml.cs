@@ -1,25 +1,50 @@
 ﻿using System;
-using System.Net.Http;
-using System.Text;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 
 namespace map
 {
     public partial class WaarnemingWindow : Window
     {
-        private string selectedCategory;
         private DateTime currentDateTime;
+        private double latitude;
+        private double longitude;
+        private WaarnemingHandler waarnemingHandler;
 
         public WaarnemingWindow()
         {
             InitializeComponent();
             currentDateTime = DateTime.Now;
+            this.Loaded += WaarnemingWindow_Loaded;
+
+            var waarnemingService = new WaarnemingService();
+            var soortService = new SoortService();
+            var wetenschappelijkeNaamService = new WetenschappelijkeNaamService();
+            waarnemingHandler = new WaarnemingHandler(waarnemingService, soortService, wetenschappelijkeNaamService);
+        }
+
+        private async void WaarnemingWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var locationService = new LocationService();
+            try
+            {
+                var (lat, lon) = await locationService.GetLocationAsync();
+                latitude = lat;
+                longitude = lon;
+                Console.WriteLine($"Location obtained: Latitude = {latitude}, Longitude = {longitude}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Kon locatie niet ophalen: {ex.Message}", "Fout");
+                Console.WriteLine($"Kon locatie niet ophalen: {ex.Message}");
+            }
         }
 
         private void UploadImage_Click(object sender, RoutedEventArgs e)
@@ -34,25 +59,15 @@ namespace map
             }
         }
 
-        private void Flora_Click(object sender, RoutedEventArgs e)
+        private void AantalTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            selectedCategory = "Flora";
-            UpdateCategoryButtonStyles();
+            e.Handled = !IsTextAllowed(e.Text);
         }
 
-        private void Fauna_Click(object sender, RoutedEventArgs e)
+        private static bool IsTextAllowed(string text)
         {
-            selectedCategory = "Fauna";
-            UpdateCategoryButtonStyles();
-        }
-
-        private void UpdateCategoryButtonStyles()
-        {
-            var defaultColor = (Brush)new BrushConverter().ConvertFrom("#53c009"); // Groen
-            var selectedColor = Brushes.Gray;
-
-            FloraButton.Background = selectedCategory == "Flora" ? selectedColor : defaultColor;
-            FaunaButton.Background = selectedCategory == "Fauna" ? selectedColor : defaultColor;
+            Regex regex = new Regex("[^0-9]+");
+            return !regex.IsMatch(text);
         }
 
         private async void Verzend_Click(object sender, RoutedEventArgs e)
@@ -63,56 +78,37 @@ namespace map
             try
             {
                 string name = nameTextBox.Text;
+                string soort = soortTextBox.Text;
+                bool zeldzaam = zeldzaamCheckBox.IsChecked ?? false;
                 string description = descriptionTextBox.Text;
                 DateTime datum = currentDateTime;
                 TimeSpan tijd = currentDateTime.TimeOfDay;
 
-                var data = new PushData
+                if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(soort) || string.IsNullOrWhiteSpace(aantalTextBox.Text))
                 {
-                    Omschrijving = name,
-                    Toelichting = description,
-                    Datum = datum,
-                    Tijd = tijd,
-                    Sid = null, // Optioneel veld
-                    WNid = null, // Optioneel veld
-                    Lid = null, // Optioneel veld
-                    Aantal = null, // Optioneel veld
-                    Geslacht = null, // Optioneel veld
-                    Gebruiker = null, // Optioneel veld
-                    Zekerheid = null, // Optioneel veld
-                    Webid = null, // Optioneel veld
-                    ManierDelen = null // Optioneel veld
-                };
+                    MessageBox.Show("Naam, Soort, en Aantal zijn verplichte velden.", "Fout");
+                    button.IsEnabled = true;
+                    return;
+                }
 
-                await PostDataToApiAsync(data);
+                if (!int.TryParse(aantalTextBox.Text, out int aantal))
+                {
+                    MessageBox.Show("Aantal moet een geldig getal zijn.", "Fout");
+                    button.IsEnabled = true;
+                    return;
+                }
 
-                MessageBox.Show($"{selectedCategory} {name} {description}\nDatum en tijd: {datum:g}", "Invoer");
+                await waarnemingHandler.VerzendWaarneming(name, soort, zeldzaam, description, datum, tijd, latitude, longitude, aantal);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Er is een fout opgetreden: {ex.Message}", "Fout");
+                Console.WriteLine($"Er is een fout opgetreden: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
             }
             finally
             {
                 button.IsEnabled = true;
-            }
-        }
-
-        private async Task PostDataToApiAsync(PushData data)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                string apiUrl = "https://api.wiv.one/api/Waarnemingen";
-                var json = JsonConvert.SerializeObject(data);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await client.PostAsync(apiUrl, content);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    string errorMessage = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"API Error: {response.StatusCode} - {errorMessage}");
-                }
             }
         }
 
@@ -122,23 +118,5 @@ namespace map
             Index.Show();
             this.Close();
         }
-    }
-
-    public class PushData
-    {
-        public int Wid { get; set; }
-        public string Omschrijving { get; set; }
-        public int? Sid { get; set; } = null; // Optioneel veld
-        public DateTime Datum { get; set; }
-        public TimeSpan Tijd { get; set; }
-        public int? WNid { get; set; } = null; // Optioneel veld
-        public int? Lid { get; set; } = null; // Optioneel veld
-        public string Toelichting { get; set; }
-        public int? Aantal { get; set; } = null; // Optioneel veld
-        public string Geslacht { get; set; } = null; // Optioneel veld
-        public string Gebruiker { get; set; } = null; // Optioneel veld
-        public string Zekerheid { get; set; } = null; // Optioneel veld
-        public int? Webid { get; set; } = null; // Optioneel veld
-        public string ManierDelen { get; set; } = null; // Optioneel veld
     }
 }

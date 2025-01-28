@@ -7,11 +7,11 @@ using Microsoft.Web.WebView2.Wpf;
 
 namespace map
 {
-    internal class GetAPI
+    internal class PlaatsMarker
     {
         private WebView2 webView;
 
-        public GetAPI(WebView2 webView)
+        public PlaatsMarker(WebView2 webView)
         {
             this.webView = webView;
         }
