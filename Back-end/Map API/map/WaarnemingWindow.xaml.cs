@@ -1,35 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace map
 {
     public partial class WaarnemingWindow : Window
     {
         private string selectedCategory;
-        private LocationService locationService;
+        private DateTime currentDateTime;
 
         public WaarnemingWindow()
         {
             InitializeComponent();
-            locationService = new LocationService();
+            currentDateTime = DateTime.Now;
         }
 
         private void UploadImage_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png"
+            };
             if (openFileDialog.ShowDialog() == true)
             {
                 uploadedImage.Source = new BitmapImage(new Uri(openFileDialog.FileName));
@@ -50,19 +48,15 @@ namespace map
 
         private void UpdateCategoryButtonStyles()
         {
-            // Haal de standaardkleur en geselecteerde kleur op
-            var defaultColor = (Brush)new BrushConverter().ConvertFrom("#53c009"); // Groen uit de Style
+            var defaultColor = (Brush)new BrushConverter().ConvertFrom("#53c009"); // Groen
             var selectedColor = Brushes.Gray;
 
-            // Stel kleuren in op basis van geselecteerde categorie
             FloraButton.Background = selectedCategory == "Flora" ? selectedColor : defaultColor;
             FaunaButton.Background = selectedCategory == "Fauna" ? selectedColor : defaultColor;
         }
 
-
         private async void Verzend_Click(object sender, RoutedEventArgs e)
         {
-            // Disable de knop om meerdere klikken te voorkomen
             var button = sender as Button;
             button.IsEnabled = false;
 
@@ -70,16 +64,29 @@ namespace map
             {
                 string name = nameTextBox.Text;
                 string description = descriptionTextBox.Text;
-                string dateTime = DateTime.Now.ToString("g"); // "g" format geeft een korte datum en tijd weer
-                var location = await locationService.GetLocationAsync();
-                if (location.Latitude == 0 && location.Longitude == 0)
+                DateTime datum = currentDateTime;
+                TimeSpan tijd = currentDateTime.TimeOfDay;
+
+                var data = new PushData
                 {
-                    MessageBox.Show($"{selectedCategory} {name} {description}\nDatum en tijd: {dateTime}\nLocatie onbekend", "Invoer");
-                }
-                else
-                {
-                    MessageBox.Show($"{selectedCategory} {name} {description}\nDatum en tijd: {dateTime}\nLatitude: {location.Latitude}, Longitude: {location.Longitude}", "Invoer");
-                }
+                    Omschrijving = name,
+                    Toelichting = description,
+                    Datum = datum,
+                    Tijd = tijd,
+                    Sid = null, // Optioneel veld
+                    WNid = null, // Optioneel veld
+                    Lid = null, // Optioneel veld
+                    Aantal = null, // Optioneel veld
+                    Geslacht = null, // Optioneel veld
+                    Gebruiker = null, // Optioneel veld
+                    Zekerheid = null, // Optioneel veld
+                    Webid = null, // Optioneel veld
+                    ManierDelen = null // Optioneel veld
+                };
+
+                await PostDataToApiAsync(data);
+
+                MessageBox.Show($"{selectedCategory} {name} {description}\nDatum en tijd: {datum:g}", "Invoer");
             }
             catch (Exception ex)
             {
@@ -87,8 +94,25 @@ namespace map
             }
             finally
             {
-                // Schakel de knop weer in
                 button.IsEnabled = true;
+            }
+        }
+
+        private async Task PostDataToApiAsync(PushData data)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string apiUrl = "https://api.wiv.one/api/Waarnemingen";
+                var json = JsonConvert.SerializeObject(data);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorMessage = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"API Error: {response.StatusCode} - {errorMessage}");
+                }
             }
         }
 
@@ -99,5 +123,22 @@ namespace map
             this.Close();
         }
     }
-}
 
+    public class PushData
+    {
+        public int Wid { get; set; }
+        public string Omschrijving { get; set; }
+        public int? Sid { get; set; } = null; // Optioneel veld
+        public DateTime Datum { get; set; }
+        public TimeSpan Tijd { get; set; }
+        public int? WNid { get; set; } = null; // Optioneel veld
+        public int? Lid { get; set; } = null; // Optioneel veld
+        public string Toelichting { get; set; }
+        public int? Aantal { get; set; } = null; // Optioneel veld
+        public string Geslacht { get; set; } = null; // Optioneel veld
+        public string Gebruiker { get; set; } = null; // Optioneel veld
+        public string Zekerheid { get; set; } = null; // Optioneel veld
+        public int? Webid { get; set; } = null; // Optioneel veld
+        public string ManierDelen { get; set; } = null; // Optioneel veld
+    }
+}
